@@ -6,7 +6,7 @@ Requirements
 
   * PHP 7.2.9 or higher;
   * PDO-SQLite PHP extension enabled;
-  * and the [usual Symfony application requirements][2].
+  * and the [usual Symfony application requirements][1].
 
 Installation
 ------------
@@ -15,11 +15,6 @@ You can use Git clone:
 
 ```bash
 $ git clone https://github.com/mvchn/guild.git my_project
-```
-
-Then composer install
-
-```bash
 $ cd my_project/
 $ composer install 
 ```
@@ -28,7 +23,7 @@ Usage
 -----
 
 There's no need to configure anything to run the application. If you have
-[installed Symfony][4] binary, run this command:
+[installed Symfony][2] binary, run this command:
 
 ```bash
 $ cd my_project/
@@ -51,3 +46,6 @@ $ cd my_project/
 $ ./bin/phpunit
 ```
 
+[1]: https://symfony.com/doc/current/reference/requirements.html
+[2]: https://symfony.com/download
+[3]: https://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html
