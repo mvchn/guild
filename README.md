@@ -19,6 +19,27 @@ $ cd my_project/
 $ composer install 
 ```
 
+Prepare database
+
+```bash
+$ mkdir data
+$ cd data
+$ sqlite3 database.sqlite
+```
+
+Create schema
+
+```bash
+$ symfony console  doctrine:database:create
+$ symfony console  doctrine:schema:create
+```
+
+Add user
+
+```bash
+$ symfony console app:add-user
+```
+
 Usage
 -----
 
