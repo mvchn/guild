@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>{% block title %}Symfony Demo application{% endblock %}</title>
 {#    <link rel="alternate" type="application/rss+xml" title="{{ 'rss.title'|trans }}" href="{{ path('blog_rss') }}">#}
-{#    {% block stylesheets %}#}
-{#        {{ encore_entry_link_tags('app') }}#}
-{#    {% endblock %}#}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
@@ -127,9 +127,9 @@
     </footer>
 {% endblock %}
 
-{#{% block javascripts %}#}
-{#    {{ encore_entry_script_tags('app') }}#}
-{#{% endblock %}#}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 
 {# it's not mandatory to set the timezone in localizeddate(). This is done to
            avoid errors when the 'intl' PHP extension is not available and the application
