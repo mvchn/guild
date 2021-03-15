@@ -1,3 +1,5 @@
+[![Testing Symfony](https://github.com/mvchn/guild/actions/workflows/symfony.yml/badge.svg?branch=master&event=push)](https://github.com/mvchn/guild/actions/workflows/symfony.yml)
+
 Guild Application
 ========================
 
