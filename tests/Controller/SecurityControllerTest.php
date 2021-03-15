@@ -15,20 +15,19 @@ class SecurityControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-    public function testLoginSuccess()
+    public function testLoginUnknownUserFail()
     {
         $client = static::createClient();
 
         $userRepository = static::$container->get(UserRepository::class);
-        $testUser = $userRepository->findOneBy([]);
+        $testUser = $userRepository->findOneBy(['username' => 'unknown_user']);
+
+        $this->expectException(\LogicException::class);
 
         $client->loginUser($testUser);
-        $client->request('GET', '/profile');
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('title', sprintf('Profile %s', $testUser->getUsername()));
     }
 
-    public function testLoginFail()
+    public function testLoginNoUserFail()
     {
         $client = static::createClient();
 
