@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testPing()
+    public function testHomepageSuccess()
     {
         $client = static::createClient();
         $client->request('GET', '/');
