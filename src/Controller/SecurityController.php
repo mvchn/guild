@@ -29,19 +29,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/profile", name="app_profile")
-     */
-    public function profile(): Response
-    {
-        if(!$this->getUser() instanceof User) {
-            throw new NotFoundHttpException();
-        }
-
-        return $this->render('security/profile.html.twig');
-    }
-
-    /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/logout", name="app_logout", methods={"GET"})
      */
     public function logout()
     {
