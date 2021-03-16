@@ -1,5 +1,11 @@
 // customize some Bootstrap variables
-$primary: darken(#428bca, 20%);
+//$primary: darken(#428bca, 20%);
+
 
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
+
+/* Move down content because we have a fixed navbar that is 3.5rem tall */
+body {
+  padding-top: 3.5rem;
+}
