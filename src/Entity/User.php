@@ -54,6 +54,12 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @var string confirmation code
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    private $confirmation;
+    
+    /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
@@ -200,5 +206,17 @@ class User implements UserInterface
     {
         // add $this->salt too if you don't use Bcrypt or Argon2i
         [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getConfirmation(): ?string
+    {
+        return $this->confirmation;
+    }
+
+    public function setConfirmation(string $confirmation): self
+    {
+        $this->confirmation = $confirmation;
+
+        return $this;
     }
 }

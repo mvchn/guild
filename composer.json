@@ -28,6 +28,8 @@
         "symfony/validator": "5.2.*",
         "symfony/webpack-encore-bundle": "^1.11",
         "symfony/yaml": "5.2.*",
+        "twig/cssinliner-extra": "^3.3",
+        "twig/inky-extra": "^3.3",
         "twig/intl-extra": "^3.3"
     },
     "config": {

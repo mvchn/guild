@@ -1,0 +1,11 @@
+{% extends '@email/default/notification/body.html.twig' %}
+
+{% block content %}
+    <h3>Confirmation code: <b>{{ confirmation }}</b></h3><br />
+{% endblock %}
+
+{% block action %}
+    <spacer size="16"></spacer>
+{#    <button href="#">Accept</button>#}
+{#    <button href="{{ url('review_comment', { id: comment.id, reject: true }) }}">Reject</button>#}
+{% endblock %}
