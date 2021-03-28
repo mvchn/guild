@@ -23,7 +23,6 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_PRODUCT_OWNER")
      * @Route("/products", methods={"GET", "POST"}, name="products_list")
      *
      */

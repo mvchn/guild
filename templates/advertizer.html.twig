@@ -8,23 +8,19 @@
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <link href="../../../../global_assets/css/icons/icomoon/styles.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/layout.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/components.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/colors.min.css" rel="stylesheet" type="text/css">
-    <!-- /global stylesheets -->
 
-    <!-- Core JS files -->
-    <script src="../../../../global_assets/js/main/jquery.min.js"></script>
-    <script src="../../../../global_assets/js/main/bootstrap.bundle.min.js"></script>
-    <script src="../../../../global_assets/js/plugins/loaders/blockui.min.js"></script>
+{#    <!-- /global stylesheets -->#}
+
+{#    <!-- Core JS files -->#}
+{#    <script src="../../../../global_assets/js/main/jquery.min.js"></script>#}
+{#    <script src="../../../../global_assets/js/main/bootstrap.bundle.min.js"></script>#}
+{#    <script src="../../../../global_assets/js/plugins/loaders/blockui.min.js"></script>#}
     <!-- /core JS files -->
 
-    <!-- Theme JS files -->
-    <script src="assets/js/app.js"></script>
-    <!-- /theme JS files -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.svg') }}" />
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('limitless') }}
+    {% endblock %}
 
 </head>
 
@@ -37,13 +33,13 @@
     <div class="navbar-header navbar-dark d-none d-md-flex align-items-md-center">
         <div class="navbar-brand navbar-brand-md">
             <a href="../full/index.html" class="d-inline-block">
-                <img src="../../../../global_assets/images/logo_light.png" alt="">
+                <img src="{{ asset('build/images/limitless/images/logo_light.png') }}" alt="">
             </a>
         </div>
 
         <div class="navbar-brand navbar-brand-xs">
             <a href="../full/index.html" class="d-inline-block">
-                <img src="../../../../global_assets/images/logo_icon_light.png" alt="">
+                <img src="{{ asset('build/images/limitless/images/logo_icon_light.png') }}" alt="">
             </a>
         </div>
     </div>
@@ -54,7 +50,7 @@
     <div class="d-flex flex-1 d-md-none">
         <div class="navbar-brand mr-auto">
             <a href="../full/index.html" class="d-inline-block">
-                <img src="../../../../global_assets/images/logo_dark.png" alt="">
+                <img src="{{ asset('build/images/limitless/images/logo_dark.png') }}" alt="">
             </a>
         </div>
 
@@ -110,7 +106,7 @@
 
             <li class="nav-item dropdown dropdown-user">
                 <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
-                    <img src="../../../../global_assets/images/image.png" class="rounded-circle mr-2" height="34" alt="">
+                    <img src="{{ asset('build/images/limitless/images/image.png') }}" class="rounded-circle mr-2" height="34" alt="">
                     <span>Victoria</span>
                 </a>
 
@@ -159,7 +155,7 @@
                 <div class="card-body">
                     <div class="media">
                         <div class="mr-3">
-                            <a href="#"><img src="../../../../global_assets/images/image.png" width="38" height="38" class="rounded-circle" alt=""></a>
+                            <a href="#"><img src="{{ asset('build/images/limitless/images/image.png') }}" width="38" height="38" class="rounded-circle" alt=""></a>
                         </div>
 
                         <div class="media-body">
@@ -268,31 +264,7 @@
         <!-- Content area -->
         <div class="content pt-0">
 
-            <!-- Basic card -->
-            <div class="card">
-                <div class="card-header header-elements-inline">
-                    <h5 class="card-title">Basic card</h5>
-                    <div class="header-elements">
-                        <div class="list-icons">
-                            <a class="list-icons-item" data-action="collapse"></a>
-                            <a class="list-icons-item" data-action="reload"></a>
-                            <a class="list-icons-item" data-action="remove"></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                    <h6 class="font-weight-semibold">Start your development with no hassle!</h6>
-                    <p class="mb-3">Common problem of templates is that all code is deeply integrated into the core. This limits your freedom in decreasing amount of code, i.e. it becomes pretty difficult to remove unnecessary code from the project. Limitless allows you to remove unnecessary and extra code easily just by removing the path to specific LESS file with component styling. All plugins and their options are also in separate files. Use only components you actually need!</p>
-
-                    <h6 class="font-weight-semibold">What is this?</h6>
-                    <p class="mb-3">Starter kit is a set of pages, useful for developers to start development process from scratch. Each layout includes base components only: layout, page kits, color system which is still optional, bootstrap files and bootstrap overrides. No extra CSS/JS files and markup. CSS files are compiled without any plugins or components. Starter kit was moved to a separate folder for better accessibility.</p>
-
-                    <h6 class="font-weight-semibold">How does it work?</h6>
-                    <p>You open one of the starter pages, add necessary plugins, uncomment paths to files in components.less file, compile new CSS. That's it. I'd also recommend to open one of main pages with functionality you need and copy all paths/JS code from there to your new page, it's just faster and easier.</p>
-                </div>
-            </div>
-            <!-- /basic card -->
+            {% block content %} {% endblock %}
 
 
             <!-- Basic table -->
@@ -520,6 +492,11 @@
 
 </div>
 <!-- /page content -->
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('limitless') }}
+{% endblock %}
+
 
 </body>
 </html>
