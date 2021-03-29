@@ -15,6 +15,7 @@
         "doctrine/doctrine-bundle": "2.2.4",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
+        "knplabs/knp-menu-bundle": "^3.1",
         "nelmio/cors-bundle": "^2.1",
         "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^6.0",
