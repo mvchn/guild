@@ -33,19 +33,19 @@ class AdvertiserMenuBuilder
         $request = $this->requestStack->getCurrentRequest();
         $menuItems = [
             'Dashboard' => [
-                'route' => 'advertiser_dashboard',
+                'route' => 'app_homepage',
                 'icon' => 'icon-home4'
             ],
             'Offers' => [
-                'route' => 'offers_list',
+                'route' => 'app_homepage',
                 'icon' => 'icon-package'
             ],
             'Products' => [
-                'route' => 'products_list',
+                'route' => 'app_homepage',
                 'icon' => 'icon-cube'
             ],
             'Landings' => [
-                'route' => 'landings_list',
+                'route' => 'app_homepage',
                 'icon' => 'icon-file-text'
             ]
 
