@@ -30,6 +30,11 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
+    App\Menu\AdvertiserMenuBuilder:
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 

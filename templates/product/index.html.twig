@@ -1,0 +1,43 @@
+{% extends 'advertizer.html.twig' %}
+
+{% block page_header %}
+<div class="page-header-content header-elements-md-inline">
+    <div class="page-title d-flex">
+        <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">{{ 'Products'|trans }}</span> - 1 Page</h4>
+        <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+    </div>
+
+    <div class="header-elements d-none text-center text-md-left mb-3 mb-md-0">
+        <a href="#" class="btn btn-labeled btn-labeled-right bg-primary">Add new <b><i class="icon-menu7"></i></b></a>
+    </div>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+    <!-- Basic table -->
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">{{ 'Products'|trans }}</h5>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.title }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /basic table -->
+{% endblock %}
