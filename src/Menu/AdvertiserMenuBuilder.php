@@ -31,53 +31,46 @@ class AdvertiserMenuBuilder
     public function createMainMenu(array $options): ItemInterface
     {
         $request = $this->requestStack->getCurrentRequest();
-        $menuItems = [
-            'Dashboard' => [
-                'route' => 'app_homepage',
-                'icon' => 'icon-home4'
-            ],
-            'Offers' => [
-                'route' => 'app_homepage',
-                'icon' => 'icon-package'
-            ],
-            'Products' => [
-                'route' => 'app_homepage',
-                'icon' => 'icon-cube'
-            ],
-            'Landings' => [
-                'route' => 'app_homepage',
-                'icon' => 'icon-file-text'
-            ]
-
-
-        ];
 
         $menu = $this->factory->createItem('root')
             ->setChildrenAttribute('class', 'nav nav-sidebar')
             ->setChildrenAttribute('data-nav-type', 'accordion')
         ;
 
-        foreach ($menuItems as $key => $meuItem) {
-            $activeClass = $this->router->match($request->getPathInfo())['_route'] === $meuItem['route'] ? 'active' : '';
-            $menu->
-                addChild($this->translator->trans($key, [], 'app'), ['route' => $meuItem['route']])
-                ->setAttribute('class', 'nav-item')
-                ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
-                ->setCurrent(false)
-                ->setExtra('icon',  $meuItem['icon'])
-            ;
-        }
+        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'app_homepage' ? 'active' : '';
+        $menu->addChild($this->translator->trans('Dashboard', [], 'app'), ['route' =>'app_homepage'])
+            ->setAttribute('class', 'nav-item')
+            ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
+            ->setCurrent(false)
+            ->setExtra('icon', 'icon-home4')
+        ;
 
-//        $menu->addChild($this->translator->trans('Offers', [], 'app'), ['uri' => '#'])
-//            ->setAttribute('class', 'nav-item nav-item-submenu')
-//            ->setLinkAttribute('class', 'nav-link')
-//            ->setExtra('icon', 'icon-copy')
-//            ->setChildrenAttribute('class', 'nav nav-group-sub')
-//            ->setChildrenAttribute('data-submenu-title', 'Offers')
-//                ->addChild('test', ['route' => 'homepage'])
-//                ->setAttribute('class', 'nav-item')
-//                ->setLinkAttribute('class', 'nav-link active')
-//        ;
+        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'products_list' ? 'active' : '';
+        $menu->addChild($this->translator->trans('Products', [], 'app'), ['route' =>'products_list'])
+            ->setAttribute('class', 'nav-item')
+            ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
+            ->setCurrent(false)
+            ->setExtra('icon', 'icon-stack')
+        ;
+
+        $menu->addChild($this->translator->trans('Offers', [], 'app'), ['uri' => '#'])
+            ->setAttribute('class', 'nav-item nav-item-submenu')
+            ->setLinkAttribute('class', 'nav-link')
+            ->setExtra('icon', 'icon-copy')
+            ->setChildrenAttribute('class', 'nav nav-group-sub')
+            ->setChildrenAttribute('data-submenu-title', 'Offers')
+                ->addChild('test', ['route' => 'app_homepage'])
+                ->setAttribute('class', 'nav-item')
+                ->setLinkAttribute('class', 'nav-link active')
+        ;
+
+        $menu->addChild($this->translator->trans('Changelog', [], 'app'), ['route' =>'app_homepage'])
+            ->setAttribute('class', 'nav-item')
+            ->setLinkAttribute('class', sprintf('nav-link %s', false))
+            ->setCurrent(false)
+            ->setExtra('icon', 'icon-list-unordered')
+            ->setExtra('badge', '0.1')
+        ;
 
         return $menu;
     }
