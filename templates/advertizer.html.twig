@@ -49,7 +49,7 @@
     <!-- Mobile controls -->
     <div class="d-flex flex-1 d-md-none">
         <div class="navbar-brand mr-auto">
-            <a href="../full/index.html" class="d-inline-block">
+            <a href="{{ path('app_homepage') }}" class="d-inline-block">
                 <img src="{{ asset('build/images/limitless/images/logo_dark.png') }}" alt="">
             </a>
         </div>
@@ -150,28 +150,28 @@
         <!-- Sidebar content -->
         <div class="sidebar-content">
 
-            <!-- User menu -->
-            <div class="sidebar-user">
-                <div class="card-body">
-                    <div class="media">
-                        <div class="mr-3">
-                            <a href="#"><img src="{{ asset('build/images/limitless/images/image.png') }}" width="38" height="38" class="rounded-circle" alt=""></a>
-                        </div>
+{#            <!-- User menu -->#}
+{#            <div class="sidebar-user">#}
+{#                <div class="card-body">#}
+{#                    <div class="media">#}
+{#                        <div class="mr-3">#}
+{#                            <a href="#"><img src="{{ asset('build/images/limitless/images/image.png') }}" width="38" height="38" class="rounded-circle" alt=""></a>#}
+{#                        </div>#}
 
-                        <div class="media-body">
-                            <div class="media-title font-weight-semibold">Victoria Baker</div>
-                            <div class="font-size-xs opacity-50">
-                                <i class="icon-pin font-size-sm"></i> &nbsp;Santa Ana, CA
-                            </div>
-                        </div>
+{#                        <div class="media-body">#}
+{#                            <div class="media-title font-weight-semibold">Victoria Baker</div>#}
+{#                            <div class="font-size-xs opacity-50">#}
+{#                                <i class="icon-pin font-size-sm"></i> &nbsp;Santa Ana, CA#}
+{#                            </div>#}
+{#                        </div>#}
 
-                        <div class="ml-3 align-self-center">
-                            <a href="#" class="text-white"><i class="icon-cog3"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /user menu -->
+{#                        <div class="ml-3 align-self-center">#}
+{#                            <a href="#" class="text-white"><i class="icon-cog3"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <!-- /user menu -->#}
 
 
             <!-- Main navigation -->
@@ -412,17 +412,9 @@
                     </div>
                 </div>
                 <!-- /form layouts -->
-
             {% endblock %}
-
-
-
-
-
-
         </div>
         <!-- /content area -->
-
 
         <!-- Footer -->
         <div class="navbar navbar-expand-lg navbar-light">
