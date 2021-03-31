@@ -32,13 +32,13 @@
     <!-- Header with logos -->
     <div class="navbar-header navbar-dark d-none d-md-flex align-items-md-center">
         <div class="navbar-brand navbar-brand-md">
-            <a href="../full/index.html" class="d-inline-block">
+            <a href="{{ path('adm') }}" class="d-inline-block">
                 <img src="{{ asset('build/images/limitless/images/logo_light.png') }}" alt="">
             </a>
         </div>
 
         <div class="navbar-brand navbar-brand-xs">
-            <a href="../full/index.html" class="d-inline-block">
+            <a href="{{ path('adm') }}" class="d-inline-block">
                 <img src="{{ asset('build/images/limitless/images/logo_icon_light.png') }}" alt="">
             </a>
         </div>
@@ -251,7 +251,7 @@
             {% block page_header %}
                 <div class="page-header-content header-elements-md-inline">
                     <div class="page-title d-flex">
-                        <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Starters</span> - 1 Sidebar</h4>
+                        <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">{{ 'Page header' }}</span> - {{ 'Page header description' }}</h4>
                         <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
                     </div>
 
@@ -416,43 +416,43 @@
         </div>
         <!-- /content area -->
 
-        <!-- Footer -->
-        <div class="navbar navbar-expand-lg navbar-light">
-            <div class="text-center d-lg-none w-100">
-                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
-                    <i class="icon-unfold mr-2"></i>
-                    Footer
-                </button>
-            </div>
+{#        <!-- Footer -->#}
+{#        <div class="navbar navbar-expand-lg navbar-light">#}
+{#            <div class="text-center d-lg-none w-100">#}
+{#                <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">#}
+{#                    <i class="icon-unfold mr-2"></i>#}
+{#                    Footer#}
+{#                </button>#}
+{#            </div>#}
 
-            <div class="navbar-collapse collapse" id="navbar-footer">
-					<span class="navbar-text">
-						&copy; 2015 - 2018. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>
-					</span>
+{#            <div class="navbar-collapse collapse" id="navbar-footer">#}
+{#					<span class="navbar-text">#}
+{#						&copy; 2015 - 2018. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>#}
+{#					</span>#}
 
-                <ul class="navbar-nav ml-lg-auto">
-                    <li class="nav-item">
-                        <a href="#" class="navbar-nav-link">Text link</a>
-                    </li>
+{#                <ul class="navbar-nav ml-lg-auto">#}
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="navbar-nav-link">Text link</a>#}
+{#                    </li>#}
 
-                    <li class="nav-item">
-                        <a href="#" class="navbar-nav-link">
-                            <i class="icon-lifebuoy"></i>
-                        </a>
-                    </li>
+{#                    <li class="nav-item">#}
+{#                        <a href="#" class="navbar-nav-link">#}
+{#                            <i class="icon-lifebuoy"></i>#}
+{#                        </a>#}
+{#                    </li>#}
 
-                    <li class="nav-item">
-                        <a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold">
-								<span class="text-pink-400">
-									<i class="icon-cart2 mr-2"></i>
-									Purchase
-								</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- /footer -->
+{#                    <li class="nav-item">#}
+{#                        <a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold">#}
+{#								<span class="text-pink-400">#}
+{#									<i class="icon-cart2 mr-2"></i>#}
+{#									Purchase#}
+{#								</span>#}
+{#                        </a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+{#        <!-- /footer -->#}
 
     </div>
     <!-- /main content -->
