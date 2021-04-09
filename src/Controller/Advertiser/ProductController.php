@@ -10,11 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ProductController extends AbstractController
 {
-
     private $em;
 
     public function __construct(EntityManagerInterface $em)
@@ -28,8 +26,6 @@ class ProductController extends AbstractController
      */
     public function list(Request $request) : Response
     {
-        $user = $this->getUser();
-
         $products = $this->em->getRepository(Product::class)->findBy([]);
 
         $product = new Product();
@@ -39,7 +35,7 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->addFlash(
-                'primary',
+                'success',
                 'Product added'
             );
 
@@ -55,22 +51,49 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_PRODUCT_OWNER")
+     * @Route("/products/new", methods={"GET", "POST"}, name="products_new")
+     */
+    public function new(Request $request) : Response
+    {
+        $product = new Product();
+        $form = $this->createForm(ProductType::class, $product);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $product = $form->getData();
+
+            $this->addFlash(
+                'success',
+                'Product added'
+            );
+
+            $this->em->persist($product);
+            $this->em->flush();
+
+            //TODO: redirect to new if enabled
+            return $this->redirectToRoute('products_list');
+        }
+
+        return $this->render('product/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/products/{id}/edit", methods={"GET", "POST"}, name="products_edit",  requirements={"id"="\d+"})
      * @ParamConverter("product", class="App:Product")
      *
      */
     public function edit(Product $product, Request $request) : Response
     {
-        $editForm = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product);
 
-        $editForm->handleRequest($request);
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-
-            $this->em->persist($product);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $this->addFlash(
-                'primary',
+                'success',
                 'Product changed'
             );
 
@@ -117,9 +140,9 @@ class ProductController extends AbstractController
 //            return $this->redirectToRoute('products_edit', ['id' => $product->getId()]);
 //        }
 
-        return $this->render('advertiser/product/edit.html.twig', [
+        return $this->render('product/edit.html.twig', [
             'product' => $product,
-            'editForm' => $editForm->createView(),
+            'form' => $form->createView(),
             //'attributeForm' => $attributeForm->createView()
         ]);
     }

@@ -68,9 +68,11 @@ class User implements UserInterface
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function updateTimestamps()
     {
-        $this->createdAt = new \DateTime();
+        if(null === $this->createdAt) {
+            $this->createdAt = new \DateTime();
+        }
     }
 
     public function getId(): ?int
@@ -169,13 +171,6 @@ class User implements UserInterface
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
     }
 
     public function getEmail(): ?string
