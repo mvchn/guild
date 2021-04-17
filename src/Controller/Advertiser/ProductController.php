@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,29 +35,13 @@ class ProductController extends AbstractController
      * @Route("", methods={"GET", "POST"}, name="list")
      *
      */
-    public function list(Request $request) : Response
+    public function list() : Response
     {
-        $form = $this->createForm(ProductType::class);
+        $products = $this->em->getRepository(Product::class)->findBy(['creator' => $this->getUser()]);
 
-        if(!$product = $this->process($form, $request)) {
-            $products = $this->em->getRepository(Product::class)->findBy(['creator' => $this->getUser()]);
-
-            return $this->render('product/index.html.twig', [
-                'form' => $form->createView(),
-                'products' => $products
-            ]);
-        }
-
-        $this->em->persist($product);
-
-        $this->addFlash(
-            'success',
-            sprintf('Product %s added', $product->getTitle())
-        );
-
-        $this->em->flush();
-
-        return $this->redirectToRoute('admin_products_list');
+        return $this->render('product/index.html.twig', [
+            'products' => $products
+        ]);
 
     }
 
@@ -69,14 +52,20 @@ class ProductController extends AbstractController
     {
         $form = $this->createForm(ProductType::class);
 
-        if(!$product = $this->process($form, $request)) {
+        $form->handleRequest($request);
 
+        if (!($form->isSubmitted() && $form->isValid())) {
             return $this->render('product/new.html.twig', [
                 'form' => $form->createView(),
             ]);
         }
 
-        $this->em->persist($product);
+        $event = new ProductEvent($form->getData());
+        $this->dispatcher->dispatch($event, ProductEvent::NEW);
+
+        if($product = $event->getProduct()) {
+            $this->em->persist($product);
+        }
 
         $this->addFlash(
             'success',
@@ -127,20 +116,6 @@ class ProductController extends AbstractController
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
-    }
-
-    public function process(FormInterface $form, Request $request): ?Product
-    {
-        $form->handleRequest($request);
-
-        if (!($form->isSubmitted() && $form->isValid())) {
-            return  null;
-        }
-
-        $event = new ProductEvent($form->getData());
-        $this->dispatcher->dispatch($event, ProductEvent::NEW);
-
-        return $event->getProduct();
     }
 
 }
