@@ -1,12 +1,12 @@
 SHELL := /bin/bash
 
-tests:
+tests-unit:
 	php bin/console doctrine:database:drop --env=test --force
 	php bin/console doctrine:database:create --env=test
 	php bin/console doctrine:schema:create --env=test
 	php bin/console doctrine:fixtures:load --env=test --no-interaction
 	php bin/phpunit --configuration phpunit.xml.dist --coverage-text --testsuite Unit
-.PHONY: tests
+.PHONY: tests-unit
 
 cc:
 	symfony console cache:clear
