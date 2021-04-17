@@ -1,0 +1,92 @@
+{% extends 'advertizer.html.twig' %}
+
+{% block page_header %}
+    <div class="page-header-content header-elements-md-inline">
+        <div class="page-title d-flex">
+            <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">{{ 'Changelog' }}</span> - {{ '0.1' }}</h4>
+            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+        </div>
+
+        <div class="header-elements d-none text-center text-md-left mb-3 mb-md-0">
+            <a href="#" class="btn btn-labeled btn-labeled-right bg-primary">Button <b><i class="icon-menu7"></i></b></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <!-- Inner container -->
+    <div class="d-flex align-items-start flex-column flex-md-row">
+
+        <!-- Left content -->
+        <div class="w-100 order-2 order-md-1">
+            <!-- Version 2.0.1 -->
+            <div class="card" id="v2_0_1">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">Version 0.1</h5>
+                    <div class="header-elements">
+                        <span class="text-muted">June 20, 2018</span>
+
+                        <div class="list-icons ml-3">
+                            <a class="list-icons-item" data-action="collapse"></a>
+                            <a class="list-icons-item" data-action="reload"></a>
+                            <a class="list-icons-item" data-action="remove"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <p class="mb-3">Quick update that includes bug fixes for version 2.0, the most important one is IE10/11 browser support - now all layouts work fine in IE10+. Here is a list of changes:</p>
+
+                    <pre class="language-javascript"><code>// # List of fixes
+// ------------------------------
+
+[0.1]  Inital release
+</code></pre>
+                </div>
+            </div>
+            <!-- /version 2.0.1 -->
+
+
+
+
+        </div>
+        <!-- /left content -->
+
+
+        <!-- Right sidebar component -->
+        <div class="sidebar-sticky w-100 w-md-auto order-1 order-md-2">
+            <div class="sidebar sidebar-light sidebar-component sidebar-component-right sidebar-expand-md">
+                <div class="sidebar-content">
+
+                    <!-- Navigation -->
+                    <div class="card">
+                        <div class="card-header bg-transparent header-elements-inline">
+                            <span class="text-uppercase font-size-sm font-weight-semibold">Changelog</span>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <a class="list-icons-item" data-action="collapse"></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <a href="http://kopyov.ticksy.com" class="btn bg-danger-400 btn-block" target="_blank"><i class="icon-lifebuoy mr-2"></i> Item support</a>
+                        </div>
+
+                        <ul class="nav nav-sidebar nav-scrollspy">
+                            <li class="nav-item-header font-size-xs line-height-xs text-uppercase pt-0">Version history</li>
+                            <li class="nav-item"><a href="#v2_1" class="nav-link">Version 2.1  <span class="text-muted font-weight-normal ml-auto">26.09.2018</span></a></li>
+
+                        </ul>
+                    </div>
+                    <!-- /navigation -->
+
+                </div>
+            </div>
+        </div>
+        <!-- /right sidebar component -->
+
+    </div>
+    <!-- /inner container -->
+
+{% endblock %}

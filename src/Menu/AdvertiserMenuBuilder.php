@@ -37,8 +37,8 @@ class AdvertiserMenuBuilder
             ->setChildrenAttribute('data-nav-type', 'accordion')
         ;
 
-        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'app_homepage' ? 'active' : '';
-        $menu->addChild($this->translator->trans('Dashboard', [], 'app'), ['route' =>'app_homepage'])
+        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'adm' ? 'active' : '';
+        $menu->addChild($this->translator->trans('Dashboard', [], 'app'), ['route' =>'adm'])
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
             ->setCurrent(false)
@@ -46,7 +46,7 @@ class AdvertiserMenuBuilder
         ;
 
         $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'products_list' ? 'active' : '';
-        $menu->addChild($this->translator->trans('Products', [], 'app'), ['route' =>'products_list'])
+        $menu->addChild($this->translator->trans('Products', [], 'app'), ['route' =>'admin_products_list'])
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
             ->setCurrent(false)
@@ -64,9 +64,10 @@ class AdvertiserMenuBuilder
                 ->setLinkAttribute('class', 'nav-link active')
         ;
 
-        $menu->addChild($this->translator->trans('Changelog', [], 'app'), ['route' =>'app_homepage'])
+        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'changelog' ? 'active' : '';
+        $menu->addChild($this->translator->trans('Changelog', [], 'app'), ['route' =>'changelog'])
             ->setAttribute('class', 'nav-item')
-            ->setLinkAttribute('class', sprintf('nav-link %s', false))
+            ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
             ->setCurrent(false)
             ->setExtra('icon', 'icon-list-unordered')
             ->setExtra('badge', '0.1')
