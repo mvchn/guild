@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -54,17 +56,35 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @var string confirmation code
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    private $confirmation;
+    
+    /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="creator")
+     */
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function updateTimestamps()
     {
-        $this->createdAt = new \DateTime();
+        if(null === $this->createdAt) {
+            $this->createdAt = new \DateTime();
+        }
     }
 
     public function getId(): ?int
@@ -113,8 +133,10 @@ class User implements UserInterface
     {
         $roles = $this->roles;
 
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // guarantees that a user always has at least one role for security
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
 
         return array_unique($roles);
     }
@@ -163,13 +185,6 @@ class User implements UserInterface
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -198,5 +213,47 @@ class User implements UserInterface
     {
         // add $this->salt too if you don't use Bcrypt or Argon2i
         [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getConfirmation(): ?string
+    {
+        return $this->confirmation;
+    }
+
+    public function setConfirmation(string $confirmation): self
+    {
+        $this->confirmation = $confirmation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getCreator() === $this) {
+                $product->setCreator(null);
+            }
+        }
+
+        return $this;
     }
 }

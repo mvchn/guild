@@ -17,8 +17,13 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Functional">
+            <directory>tests/Controller</directory>
+            <directory>tests/Command</directory>
+        </testsuite>
+
+        <testsuite name="Unit">
+            <directory>tests/Utils</directory>
         </testsuite>
     </testsuites>
 
@@ -31,6 +36,12 @@
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
+
+    <extensions>
+        <!-- it begins a database transaction before every testcase and rolls it back after
+            the test finished, so tests can manipulate the database without affecting other tests -->
+        <extension class="\DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->
     <!--

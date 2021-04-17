@@ -13,24 +13,4 @@ class SecurityControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
     }
-
-    public function testLoginUnknownUserFail()
-    {
-        $client = static::createClient();
-
-        $testUser = null;
-
-        $this->expectException(\LogicException::class);
-
-        $client->loginUser($testUser);
-    }
-
-    public function testLoginNoUserFail()
-    {
-        $client = static::createClient();
-
-        $client->request('GET', '/profile');
-
-        $this->assertResponseStatusCodeSame(404);
-    }
 }
