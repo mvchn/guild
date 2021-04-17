@@ -36,4 +36,4 @@ jobs:
           composer install --no-progress --prefer-dist --optimize-autoloader
           php bin/phpunit install
       - name: Run Tests
-        run: php bin/phpunit --coverage-text
+        run: make tests
