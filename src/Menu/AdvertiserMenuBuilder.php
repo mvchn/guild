@@ -46,7 +46,7 @@ class AdvertiserMenuBuilder
         ;
 
         $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'products_list' ? 'active' : '';
-        $menu->addChild($this->translator->trans('Products', [], 'app'), ['route' =>'products_list'])
+        $menu->addChild($this->translator->trans('Products', [], 'app'), ['route' =>'admin_products_list'])
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
             ->setCurrent(false)

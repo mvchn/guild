@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\ChangePasswordType;
-use App\Form\UserType;
+use App\Form\Type\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

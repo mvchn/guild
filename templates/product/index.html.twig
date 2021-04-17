@@ -8,7 +8,7 @@
         </div>
 
         <div class="header-elements d-none text-center text-md-left mb-3 mb-md-0">
-            <a href="{{ path('products_new') }}" class="btn btn-labeled btn-labeled-right bg-primary">Add new <b><i class="icon-menu7"></i></b></a>
+            <a href="{{ path('admin_products_new') }}" class="btn btn-labeled btn-labeled-right bg-primary">Add new <b><i class="icon-menu7"></i></b></a>
         </div>
     </div>
 {% endblock page_header %}
@@ -35,13 +35,15 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
+                        <th>Created At</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for product in products -%}
                     <tr>
-                        <td>{{ product.id }}</td>
-                        <td><a href="{{ path('products_edit', {'id': product.id}) }}">{{ product.title }}</a></td>
+                        <td><a href="{{ path('admin_products_edit', {'id': product.id}) }}">{{ product.id }}</a></td>
+                        <td><a href="{{ path('admin_products_edit', {'id': product.id}) }}">{{ product.title }}</a></td>
+                        <td>{{ product.createdAt|date }}</td>
                     </tr>
                     {% endfor -%}
                     </tbody>
@@ -49,7 +51,7 @@
             </div>
             {% else -%}
             <p>No products. You can add new here</p>
-            <a href="{{ path('products_new') }}" class="btn bg-blue">New product</a>
+            <a href="{{ path('admin_products_new') }}" class="btn bg-blue">New product</a>
             {% endif -%}
         </div>
     </div>
