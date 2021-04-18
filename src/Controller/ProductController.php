@@ -13,6 +13,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
+     * @Route("/products", methods={"GET"}, name="product_list")
+     */
+    public function list() : Response
+    {
+        $products = $this->getDoctrine()->getManager()->getRepository(Product::class)->findAll();
+
+        return $this->render('product/index.html.twig', [
+            'products' => $products
+        ]);
+    }
+
+    /**
      * @Route("/product/{id}", methods={"GET"}, name="product_show", requirements={"id"="\d+"})
      * @ParamConverter("product", class="App:Product")
      */

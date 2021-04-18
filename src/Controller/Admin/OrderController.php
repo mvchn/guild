@@ -24,7 +24,7 @@ class OrderController extends AbstractController
     {
         $orders = $this->getDoctrine()->getManager()->getRepository(Order::class)->findAll();
 
-        return $this->render('order/index.html.twig', [
+        return $this->render('admin/order/index.html.twig', [
             'orders' => $orders
         ]);
 
@@ -37,7 +37,7 @@ class OrderController extends AbstractController
      */
     public function show(Order $order) : Response
     {
-        return $this->render('order/show.html.twig', [
+        return $this->render('admin/order/show.html.twig', [
             'order' => $order,
         ]);
     }

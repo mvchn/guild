@@ -10,7 +10,7 @@ class DefaultController extends AbstractController
 {
     public function dashboard() : Response
     {
-        return $this->render('adm/dashboard.html.twig');
+        return $this->render('admin/dashboard.html.twig');
     }
 
     /**
@@ -18,7 +18,7 @@ class DefaultController extends AbstractController
      */
     public function changelog() : Response
     {
-        return $this->render('adm/changelog.html.twig');
+        return $this->render('admin/changelog.html.twig');
     }
 
 

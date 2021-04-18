@@ -55,7 +55,7 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if (!($form->isSubmitted() && $form->isValid())) {
-            return $this->render('product/new.html.twig', [
+            return $this->render('admin/product/new.html.twig', [
                 'form' => $form->createView(),
             ]);
         }
@@ -100,7 +100,7 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('admin_products_list');
         }
 
-        return $this->render('product/edit.html.twig', [
+        return $this->render('admin/product/edit.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
         ]);
@@ -113,7 +113,7 @@ class ProductController extends AbstractController
      */
     public function show(Product $product) : Response
     {
-        return $this->render('product/show.html.twig', [
+        return $this->render('admin/product/show.html.twig', [
             'product' => $product,
         ]);
     }
