@@ -30,13 +30,13 @@ class ProductController extends AbstractController
      */
     public function order(Product $product, Request $request): Response
     {
-        $order = new Order();
-        $order->addProduct($product);
-
-        $form = $this->createForm(OrderType::class, $order);
+        $form = $this->createForm(OrderType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $order = $form->getData();
+            $order->addProduct($product);
 
             $this->addFlash(
                 'success',

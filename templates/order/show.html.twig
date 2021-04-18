@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
-    <div class="card">
-        <div class="card-header header-elements-inline">
-            <h5 class="card-title">{{ 'Order'|trans }}</h5>
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h1>{{ 'Order'|trans }} {{ order.id }}</h1>
+                <br>
+                <p>{{ order.status }}</p>
+            </div>
         </div>
-        <div class="card-body">
-            {{ order.id }}
-        </div>
-
     </div>
+
 {% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Advertiser;
+namespace App\Controller\Admin;
 
 use App\Entity\Product;
 use App\Event\ProductEvent;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/adm/products", name="admin_products_")
+ * @Route("/admin/products", name="admin_products_")
  * @IsGranted("ROLE_USER")
  */
 
