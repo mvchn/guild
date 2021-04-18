@@ -42,15 +42,28 @@ class ProductController extends AbstractController
                 'success',
                 'Order created'
             );
+
             $this->getDoctrine()->getManager()->persist($order);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('product_order', ['id' => $product->getId()]);
+            //TODO: redirect to thank you page
+            return $this->redirectToRoute('product_order_success', ['id' => $order->getId()]);
         }
 
         return $this->render('product/order.html.twig', [
             'product' => $product,
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/order/{id}", methods={"GET"}, name="product_order_success", requirements={"id"="\d+"})
+     * @ParamConverter("order", class="App:Order")
+     */
+    public function orderSuccess(Order $order): Response
+    {
+        return $this->render('order/show.html.twig', [
+            'order' => $order,
         ]);
     }
 }

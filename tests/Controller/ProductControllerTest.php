@@ -35,6 +35,9 @@ class ProductControllerTest extends WebTestCase
 
         $order = $orderRepository->findOneBy(['name' => 'name', 'email' => 'movchan@gmail.com']);
 
+        $client->request('GET', sprintf('/order/%d', $order->getId()));
+        $this->assertResponseIsSuccessful();
+
         $this->assertInstanceOf(Order::class, $order);
     }
 
