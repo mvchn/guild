@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h1>{{ product.title }}</h1>
+                {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+                {{ form(form) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -2,7 +2,6 @@
     <div class="messages">
         {% for type, messages in app.flashes %}
             {% for message in messages %}
-                {% dump(message) %}
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Holy guacamole!</strong> {{ message|trans }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="{{ 'action.close'|trans }}">

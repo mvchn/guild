@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\StopFactor\GetContact;
+use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\NotificationEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -23,14 +24,20 @@ class SecurityController extends AbstractController
 
     private $session;
 
+    private $login;
+
+    private $guard;
+
     private $mailer;
 
     private $defaultEmail;
 
-    public function __construct(EntityManagerInterface $em, SessionInterface $session, MailerInterface $mailer, string $defaultEmail)
+    public function __construct(EntityManagerInterface $em, SessionInterface $session, LoginFormAuthenticator $login, GuardAuthenticatorHandler $guard, MailerInterface $mailer, string $defaultEmail)
     {
         $this->em = $em;
         $this->session = $session;
+        $this->login = $login;
+        $this->guard = $guard;
         $this->mailer = $mailer;
         $this->defaultEmail = $defaultEmail;
     }
@@ -62,8 +69,6 @@ class SecurityController extends AbstractController
             ])
             ->getForm();
 
-        // ...
-        //$form = $this->createForm(GetConfirmationType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -77,8 +82,7 @@ class SecurityController extends AbstractController
                 ]);
             }
 
-            //TODO: set random generator
-            $user->setConfirmation('1234');
+            $user->setConfirmation(rand(111111, 999999));
             $this->session->set('restoreUser', $user);
 
             return $this->redirectToRoute('user_confirmation_code');
@@ -130,8 +134,7 @@ class SecurityController extends AbstractController
                 ]);
             }
 
-            //TODO: something with this rule, now only redirect
-            return $this->redirectToRoute('app_homepage');
+            return $this->guard->authenticateUserAndHandleSuccess($user, $request, $this->login,'main');
         }
 
         return $this->render('security/forgot_password.html.twig', [
