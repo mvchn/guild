@@ -28,7 +28,7 @@ class DefaultControllerTest extends WebTestCase
     public function getRoutes(): iterable
     {
         yield 'dashboard' => [200, '/admin'];
-        yield 'changelog' =>  [200, '/changelog'];
+        yield 'changelog' =>  [200, '/admin/changelog'];
         yield 'notfound' => [404, '/admin/notfound'];
     }
 }

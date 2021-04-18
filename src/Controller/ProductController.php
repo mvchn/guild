@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Order;
 use App\Entity\Product;
 use App\Form\OrderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -47,23 +46,12 @@ class ProductController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             //TODO: redirect to thank you page
-            return $this->redirectToRoute('product_order_success', ['id' => $order->getId()]);
+            return $this->redirectToRoute('order_show', ['id' => $order->getId()]);
         }
 
         return $this->render('product/order.html.twig', [
             'product' => $product,
             'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/order/{id}", methods={"GET"}, name="product_order_success", requirements={"id"="\d+"})
-     * @ParamConverter("order", class="App:Order")
-     */
-    public function orderSuccess(Order $order): Response
-    {
-        return $this->render('order/show.html.twig', [
-            'order' => $order,
         ]);
     }
 }
