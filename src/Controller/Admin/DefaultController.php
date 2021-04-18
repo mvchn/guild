@@ -14,7 +14,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/changelog", methods={"GET"}, name="changelog")
+     * @Route("/admin/changelog", methods={"GET"}, name="changelog")
      */
     public function changelog() : Response
     {

@@ -59,19 +59,19 @@ class AdvertiserMenuBuilder
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
             ->setCurrent(false)
-            ->setExtra('icon', 'icon-stack')
+            ->setExtra('icon', 'icon-copy')
         ;
 
-        $menu->addChild($this->translator->trans('Offers', [], 'app'), ['uri' => '#'])
-            ->setAttribute('class', 'nav-item nav-item-submenu')
-            ->setLinkAttribute('class', 'nav-link')
-            ->setExtra('icon', 'icon-copy')
-            ->setChildrenAttribute('class', 'nav nav-group-sub')
-            ->setChildrenAttribute('data-submenu-title', 'Offers')
-                ->addChild('test', ['route' => 'app_homepage'])
-                ->setAttribute('class', 'nav-item')
-                ->setLinkAttribute('class', 'nav-link active')
-        ;
+//        $menu->addChild($this->translator->trans('Offers', [], 'app'), ['uri' => '#'])
+//            ->setAttribute('class', 'nav-item nav-item-submenu')
+//            ->setLinkAttribute('class', 'nav-link')
+//            ->setExtra('icon', 'icon-copy')
+//            ->setChildrenAttribute('class', 'nav nav-group-sub')
+//            ->setChildrenAttribute('data-submenu-title', 'Offers')
+//                ->addChild('test', ['route' => 'app_homepage'])
+//                ->setAttribute('class', 'nav-item')
+//                ->setLinkAttribute('class', 'nav-link active')
+//        ;
 
         $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'changelog' ? 'active' : '';
         $menu->addChild($this->translator->trans('Changelog', [], 'app'), ['route' =>'changelog'])
