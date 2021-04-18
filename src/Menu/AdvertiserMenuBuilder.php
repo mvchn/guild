@@ -28,6 +28,7 @@ class AdvertiserMenuBuilder
         $this->requestStack = $requestStack;
     }
 
+    //TODO: use $options
     public function createMainMenu(array $options): ItemInterface
     {
         $request = $this->requestStack->getCurrentRequest();
@@ -47,6 +48,14 @@ class AdvertiserMenuBuilder
 
         $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'products_list' ? 'active' : '';
         $menu->addChild($this->translator->trans('Products', [], 'app'), ['route' =>'admin_products_list'])
+            ->setAttribute('class', 'nav-item')
+            ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
+            ->setCurrent(false)
+            ->setExtra('icon', 'icon-stack')
+        ;
+
+        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'orders_list' ? 'active' : '';
+        $menu->addChild($this->translator->trans('Orders', [], 'app'), ['route' =>'admin_orders_list'])
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
             ->setCurrent(false)
