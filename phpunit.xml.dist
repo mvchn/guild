@@ -3,7 +3,6 @@
 <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="bin/.phpunit/phpunit.xsd"
-         backupGlobals="false"
          colors="true"
          bootstrap="tests/bootstrap.php"
 >
@@ -18,18 +17,21 @@
 
     <testsuites>
         <testsuite name="Functional">
-            <directory suffix="Test.php">tests/Controller</directory>
-            <directory suffix="Test.php">tests/Command</directory>
+            <directory>tests/Controller</directory>
+            <directory>tests/Command</directory>
         </testsuite>
 
         <testsuite name="Unit">
-            <directory suffix="Test.php">tests/Utils</directory>
+            <directory>tests/Utils</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src</directory>
+            <exclude>
+                <directory suffix=".php">src/DataFixtures</directory>
+            </exclude>
         </whitelist>
     </filter>
 
