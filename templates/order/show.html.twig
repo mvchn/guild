@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">{{ 'Order'|trans }}</h5>
+        </div>
+        <div class="card-body">
+            {{ order.id }}
+        </div>
+
+    </div>
+{% endblock %}

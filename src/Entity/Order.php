@@ -36,6 +36,16 @@ class Order
      */
     private $products;
 
+    /**
+     * @ORM\Column(type="string", length=128)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $email;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -96,6 +106,30 @@ class Order
     public function removeProduct(Product $product): self
     {
         $this->products->removeElement($product);
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
