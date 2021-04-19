@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\OrderType;
+use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +16,9 @@ class ProductController extends AbstractController
     /**
      * @Route("/products", methods={"GET"}, name="product_list")
      */
-    public function list() : Response
+    public function list(ProductRepository $repository) : Response
     {
-        $products = $this->getDoctrine()->getManager()->getRepository(Product::class)->findAll();
+        $products = $repository->findAll();
 
         return $this->render('product/index.html.twig', [
             'products' => $products

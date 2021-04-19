@@ -62,7 +62,7 @@ class UserControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'kitten',
         ]);
         $client->request('GET', '/profile/edit');
-        $client->submitForm('action.save', [
+        $client->submitForm('__action.save', [
             'user[email]' => $newUserEmail,
         ]);
 
@@ -84,7 +84,7 @@ class UserControllerTest extends WebTestCase
             'PHP_AUTH_PW' => 'kitten',
         ]);
         $client->request('GET', '/profile/change-password');
-        $client->submitForm('action.save', [
+        $client->submitForm('__action.save', [
             'change_password[currentPassword]' => 'kitten',
             'change_password[newPassword][first]' => $newUserPassword,
             'change_password[newPassword][second]' => $newUserPassword,
