@@ -16,11 +16,11 @@ class OrderType extends AbstractType
         $builder
             ->add('name')
             ->add('email', null, ['help' => 'Link will be sent to email']) //TODO: or phone
-            ->add('status', ChoiceType::class, ['choices' => [
-                'new' => 'new',
-                'sent' => 'sent',
-                'completed' => 'completed'
-            ]])
+//            ->add('status', ChoiceType::class, ['choices' => [
+//                'new' => 'new',
+//                'sent' => 'sent',
+//                'completed' => 'completed'
+//            ]])
             ->add('save', SubmitType::class, ['label' => 'Save'])
         ;
     }
