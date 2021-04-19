@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Order;
 use App\Entity\Product;
 use App\Form\OrderType;
+use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +13,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
+    /**
+     * @Route("/products", methods={"GET"}, name="product_list")
+     */
+    public function list(ProductRepository $repository) : Response
+    {
+        $products = $repository->findAll();
+
+        return $this->render('product/index.html.twig', [
+            'products' => $products
+        ]);
+    }
+
     /**
      * @Route("/product/{id}", methods={"GET"}, name="product_show", requirements={"id"="\d+"})
      * @ParamConverter("product", class="App:Product")
@@ -30,13 +42,13 @@ class ProductController extends AbstractController
      */
     public function order(Product $product, Request $request): Response
     {
-        $order = new Order();
-        $order->addProduct($product);
-
-        $form = $this->createForm(OrderType::class, $order);
+        $form = $this->createForm(OrderType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $order = $form->getData();
+            $order->addProduct($product);
 
             $this->addFlash(
                 'success',
@@ -47,23 +59,12 @@ class ProductController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             //TODO: redirect to thank you page
-            return $this->redirectToRoute('product_order_success', ['id' => $order->getId()]);
+            return $this->redirectToRoute('order_show', ['id' => $order->getId()]);
         }
 
         return $this->render('product/order.html.twig', [
             'product' => $product,
             'form' => $form->createView()
-        ]);
-    }
-
-    /**
-     * @Route("/order/{id}", methods={"GET"}, name="product_order_success", requirements={"id"="\d+"})
-     * @ParamConverter("order", class="App:Order")
-     */
-    public function orderSuccess(Order $order): Response
-    {
-        return $this->render('order/show.html.twig', [
-            'order' => $order,
         ]);
     }
 }

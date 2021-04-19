@@ -3,5 +3,5 @@
 #    controller: App\Controller\DefaultController::index
 
 adm:
-    path: /adm
-    controller: App\Controller\Advertiser\DefaultController::dashboard
+    path: /admin
+    controller: App\Controller\Admin\DefaultController::dashboard

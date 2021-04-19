@@ -1,4 +1,4 @@
-{% extends 'product/index.html.twig' %}
+{% extends 'admin/product/index.html.twig' %}
 
 {% block page_header %}
     <div class="page-header-content header-elements-md-inline">
@@ -15,9 +15,8 @@
             <h5 class="card-title">{{ 'Products'|trans }}</h5>
         </div>
         <div class="card-body">
-            {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
-            {{ form(form) }}
+            {{ product.title }}
+            {{ product.destinationUrl }}
         </div>
-
     </div>
 {% endblock %}

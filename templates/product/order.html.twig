@@ -3,10 +3,14 @@
 {% block main %}
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
+                {% include 'default/_flash_messages.html.twig' %}
                 <h1>{{ product.title }}</h1>
-                {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
-                {{ form(form) }}
+                {% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_widget(form) }}
+                {{ form_end(form) }}
 
             </div>
         </div>

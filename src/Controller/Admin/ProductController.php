@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Controller\Advertiser;
+namespace App\Controller\Admin;
 
 use App\Entity\Product;
 use App\Event\ProductEvent;
 use App\Form\Type\ProductType;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/adm/products", name="admin_products_")
+ * @Route("/admin/products", name="admin_products_")
  * @IsGranted("ROLE_USER")
  */
 
@@ -35,11 +36,11 @@ class ProductController extends AbstractController
      * @Route("", methods={"GET", "POST"}, name="list")
      *
      */
-    public function list() : Response
+    public function list(ProductRepository $repository) : Response
     {
-        $products = $this->em->getRepository(Product::class)->findBy(['creator' => $this->getUser()]);
+        $products = $repository->findBy(['creator' => $this->getUser()]);
 
-        return $this->render('product/index.html.twig', [
+        return $this->render('admin/product/index.html.twig', [
             'products' => $products
         ]);
 
@@ -55,7 +56,7 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if (!($form->isSubmitted() && $form->isValid())) {
-            return $this->render('product/new.html.twig', [
+            return $this->render('admin/product/new.html.twig', [
                 'form' => $form->createView(),
             ]);
         }
@@ -100,7 +101,7 @@ class ProductController extends AbstractController
             return $this->redirectToRoute('admin_products_list');
         }
 
-        return $this->render('product/edit.html.twig', [
+        return $this->render('admin/product/edit.html.twig', [
             'product' => $product,
             'form' => $form->createView(),
         ]);
@@ -113,7 +114,7 @@ class ProductController extends AbstractController
      */
     public function show(Product $product) : Response
     {
-        return $this->render('product/show.html.twig', [
+        return $this->render('admin/product/show.html.twig', [
             'product' => $product,
         ]);
     }

@@ -18,6 +18,8 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
+            ->add('description', TextType::class)
+            ->add('destinationUrl', TextType::class)
             ->add('save', SubmitType::class, ['label' => 'Create'])
         ;
     }

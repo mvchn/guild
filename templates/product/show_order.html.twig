@@ -6,7 +6,7 @@
             <div class="col-md-4">
                 <h1> {{ product.title }}</h1>
 
-
+                <a class="btn btn-primary" href="{{ url('product_order', {"id":product.id}) }}">{{ 'Order'|trans }}</a>
             </div>
         </div>
     </div>

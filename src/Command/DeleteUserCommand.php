@@ -84,15 +84,12 @@ HELP
         $username = $this->validator->validateUsername($input->getArgument('username'));
 
         /** @var User $user */
-        $user = $this->users->findOneByUsername($username);
+        $user = $this->users->findOneBy(['username' => $username]);
 
         if (null === $user) {
             throw new RuntimeException(sprintf('User with username "%s" not found.', $username));
         }
 
-        // After an entity has been removed its in-memory state is the same
-        // as before the removal, except for generated identifiers.
-        // See https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/working-with-objects.html#removing-entities
         $userId = $user->getId();
 
         $this->entityManager->remove($user);

@@ -6,6 +6,7 @@ use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
@@ -43,12 +44,20 @@ class Order
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Email()
+     *
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    private $status;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->status = 'new';
     }
 
     /**
@@ -130,6 +139,18 @@ class Order
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

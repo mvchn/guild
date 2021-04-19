@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\Advertiser;
+namespace App\Tests\Controller\Admin;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
@@ -39,20 +39,22 @@ class ProductControllerTest extends WebTestCase
 
         $client->loginUser($testUser);
 
-        $client->request('POST', '/adm/products/new');
+        $client->request('POST', '/admin/products/new');
         $client->submitForm('Create', [
             'product[title]' => 'test',
+            'product[description]' => 'description',
+            'product[destinationUrl]' => 'https://google.com',
         ]);
 
         $product = $productRepository->findOneBy(['title'=> 'test']);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertInstanceOf(Product::class, $product);
 
-        $client->request('GET', sprintf('/adm/products/%d', $product->getId()));
+        $client->request('GET', sprintf('/admin/products/%d', $product->getId()));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
-        $client->request('GET', sprintf('/adm/products/%d/edit', $product->getId()));
+        $client->request('GET', sprintf('/admin/products/%d/edit', $product->getId()));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
@@ -67,8 +69,8 @@ class ProductControllerTest extends WebTestCase
 
     public function getRoutes(): iterable
     {
-        yield 'list' => [200, '/adm/products'];
-        yield 'new' =>  [200, '/adm/products/new'];
-        yield 'fail' => [404, '/adm/products/ff'];
+        yield 'list' => [200, '/admin/products'];
+        yield 'new' =>  [200, '/admin/products/new'];
+        yield 'fail' => [404, '/admin/products/ff'];
     }
 }

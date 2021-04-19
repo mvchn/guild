@@ -28,6 +28,7 @@ class AdvertiserMenuBuilder
         $this->requestStack = $requestStack;
     }
 
+    //TODO: use $options
     public function createMainMenu(array $options): ItemInterface
     {
         $request = $this->requestStack->getCurrentRequest();
@@ -53,16 +54,24 @@ class AdvertiserMenuBuilder
             ->setExtra('icon', 'icon-stack')
         ;
 
-        $menu->addChild($this->translator->trans('Offers', [], 'app'), ['uri' => '#'])
-            ->setAttribute('class', 'nav-item nav-item-submenu')
-            ->setLinkAttribute('class', 'nav-link')
+        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'orders_list' ? 'active' : '';
+        $menu->addChild($this->translator->trans('Orders', [], 'app'), ['route' =>'admin_orders_list'])
+            ->setAttribute('class', 'nav-item')
+            ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
+            ->setCurrent(false)
             ->setExtra('icon', 'icon-copy')
-            ->setChildrenAttribute('class', 'nav nav-group-sub')
-            ->setChildrenAttribute('data-submenu-title', 'Offers')
-                ->addChild('test', ['route' => 'app_homepage'])
-                ->setAttribute('class', 'nav-item')
-                ->setLinkAttribute('class', 'nav-link active')
         ;
+
+//        $menu->addChild($this->translator->trans('Offers', [], 'app'), ['uri' => '#'])
+//            ->setAttribute('class', 'nav-item nav-item-submenu')
+//            ->setLinkAttribute('class', 'nav-link')
+//            ->setExtra('icon', 'icon-copy')
+//            ->setChildrenAttribute('class', 'nav nav-group-sub')
+//            ->setChildrenAttribute('data-submenu-title', 'Offers')
+//                ->addChild('test', ['route' => 'app_homepage'])
+//                ->setAttribute('class', 'nav-item')
+//                ->setLinkAttribute('class', 'nav-link active')
+//        ;
 
         $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'changelog' ? 'active' : '';
         $menu->addChild($this->translator->trans('Changelog', [], 'app'), ['route' =>'changelog'])

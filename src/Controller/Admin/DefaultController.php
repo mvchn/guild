@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Advertiser;
+namespace App\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,15 +10,15 @@ class DefaultController extends AbstractController
 {
     public function dashboard() : Response
     {
-        return $this->render('adm/dashboard.html.twig');
+        return $this->render('admin/dashboard.html.twig');
     }
 
     /**
-     * @Route("/changelog", methods={"GET"}, name="changelog")
+     * @Route("/admin/changelog", methods={"GET"}, name="changelog")
      */
     public function changelog() : Response
     {
-        return $this->render('adm/changelog.html.twig');
+        return $this->render('admin/changelog.html.twig');
     }
 
 

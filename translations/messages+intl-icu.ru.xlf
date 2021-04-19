@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="ru" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>__Username</target>
+      </trans-unit>
+      <trans-unit id="588_9PF" resname="Password">
+        <source>Password</source>
+        <target>__Password</target>
+      </trans-unit>
+      <trans-unit id="_TJnqhH" resname="Remember me">
+        <source>Remember me</source>
+        <target>__Remember me</target>
+      </trans-unit>
+      <trans-unit id="v9QCsvb" resname="Sign in">
+        <source>Sign in</source>
+        <target>__Sign in</target>
+      </trans-unit>
+      <trans-unit id="EOwSraV" resname="title.forgot_password">
+        <source>title.forgot_password</source>
+        <target>__title.forgot_password</target>
+      </trans-unit>
+      <trans-unit id="HLtdhYw" resname="action.save">
+        <source>action.save</source>
+        <target>__action.save</target>
+      </trans-unit>
+      <trans-unit id="t_is3VI" resname="Orders">
+        <source>Orders</source>
+        <target>__Orders</target>
+      </trans-unit>
+      <trans-unit id="TtyL_vx" resname="Products">
+        <source>Products</source>
+        <target>__Products</target>
+      </trans-unit>
+      <trans-unit id="DfbxytN" resname="Show">
+        <source>Show</source>
+        <target>__Show</target>
+      </trans-unit>
+      <trans-unit id="rjDqmQR" resname="menu.user">
+        <source>menu.user</source>
+        <target>__menu.user</target>
+      </trans-unit>
+      <trans-unit id="CX_oSFd" resname="action.change_password">
+        <source>action.change_password</source>
+        <target>__action.change_password</target>
+      </trans-unit>
+      <trans-unit id="wBTFKFR" resname="menu.logout">
+        <source>menu.logout</source>
+        <target>__menu.logout</target>
+      </trans-unit>
+      <trans-unit id="wCazS.X" resname="action.close">
+        <source>action.close</source>
+        <target>__action.close</target>
+      </trans-unit>
+      <trans-unit id="QyEBwq." resname="Lets talk about agile and our mission">
+        <source>Lets talk about agile and our mission</source>
+        <target>__Lets talk about agile and our mission</target>
+      </trans-unit>
+      <trans-unit id="iY8shBI" resname="We have 200 members now">
+        <source>We have 200 members now</source>
+        <target>__We have 200 members now</target>
+      </trans-unit>
+      <trans-unit id="bjUsRyB" resname="Give a little of mone for us">
+        <source>Give a little of mone for us</source>
+        <target>__Give a little of mone for us</target>
+      </trans-unit>
+      <trans-unit id="dDUw20Q" resname="Please sign in">
+        <source>Please sign in</source>
+        <target>__Please sign in</target>
+      </trans-unit>
+      <trans-unit id="MMHY0_k" resname="Forgot password?">
+        <source>Forgot password?</source>
+        <target>__Forgot password?</target>
+      </trans-unit>
+      <trans-unit id="rrU0GR8" resname="title.change_password">
+        <source>title.change_password</source>
+        <target>__title.change_password</target>
+      </trans-unit>
+      <trans-unit id="1sstKF9" resname="title.edit_user">
+        <source>title.edit_user</source>
+        <target>__title.edit_user</target>
+      </trans-unit>
+      <trans-unit id="a_CQgly" resname="Order">
+        <source>Order</source>
+        <target>__Order</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

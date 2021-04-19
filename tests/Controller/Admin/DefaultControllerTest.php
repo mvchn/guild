@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\Advertiser;
+namespace App\Tests\Controller\Admin;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -27,8 +27,8 @@ class DefaultControllerTest extends WebTestCase
 
     public function getRoutes(): iterable
     {
-        yield 'dashboard' => [200, '/adm'];
-        yield 'changelog' =>  [200, '/changelog'];
-        yield 'notfound' => [404, '/adm/notfound'];
+        yield 'dashboard' => [200, '/admin'];
+        yield 'changelog' =>  [200, '/admin/changelog'];
+        yield 'notfound' => [404, '/admin/notfound'];
     }
 }

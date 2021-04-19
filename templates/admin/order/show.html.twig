@@ -1,9 +1,9 @@
-{% extends 'product/index.html.twig' %}
+{% extends 'admin/order/index.html.twig' %}
 
 {% block page_header %}
     <div class="page-header-content header-elements-md-inline">
         <div class="page-title d-flex">
-            <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">New product</span></h4>
+            <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Order details #{{ order.id }}</span></h4>
             <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
         </div>
     </div>
@@ -12,11 +12,10 @@
 {% block content %}
     <div class="card">
         <div class="card-header header-elements-inline">
-            <h5 class="card-title">{{ 'Products'|trans }}</h5>
+            <h5 class="card-title">{{ 'Order'|trans }}</h5>
         </div>
         <div class="card-body">
-            {{ product.title }}
+            <p>{{ order.id }}</p>
         </div>
-
     </div>
 {% endblock %}
