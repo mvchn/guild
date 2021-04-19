@@ -42,6 +42,8 @@ class ProductControllerTest extends WebTestCase
         $client->request('POST', '/admin/products/new');
         $client->submitForm('Create', [
             'product[title]' => 'test',
+            'product[description]' => 'description',
+            'product[destinationUrl]' => 'https://google.com',
         ]);
 
         $product = $productRepository->findOneBy(['title'=> 'test']);

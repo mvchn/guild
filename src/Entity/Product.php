@@ -50,6 +50,11 @@ class Product
      */
     private $destinationUrl;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
@@ -137,6 +142,18 @@ class Product
     public function setDestinationUrl(?string $destinationUrl): self
     {
         $this->destinationUrl = $destinationUrl;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

@@ -14,14 +14,8 @@
 {% endblock page_header %}
 
 {% block content %}
-    {% for label, messages in app.flashes(['success', 'warning']) %}
-        {% for message in messages -%}
-            <div class="alert alert-{{ label }} border-0 alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
-                {{ message }}
-            </div>
-        {% endfor -%}
-    {% endfor %}
+
+    {% include 'default/_flash_messages.html.twig' %}
 
     <div class="card">
         <div class="card-header header-elements-inline">
@@ -37,6 +31,7 @@
                         <th>Name</th>
                         <th>URL</th>
                         <th>Created At</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,6 +41,7 @@
                         <td><a href="{{ path('admin_products_edit', {'id': product.id}) }}">{{ product.title }}</a></td>
                         <td>{{ product.destinationUrl }}</td>
                         <td>{{ product.createdAt|date }}</td>
+                        <td><a href="{{ path('admin_products_show', {'id': product.id}) }}" class="btn btn-outline-primary btn-sm">{{ 'Show'|trans }}</a></td>
                     </tr>
                     {% endfor -%}
                     </tbody>

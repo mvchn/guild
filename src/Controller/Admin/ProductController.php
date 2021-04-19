@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Product;
 use App\Event\ProductEvent;
 use App\Form\Type\ProductType;
+use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -35,11 +36,11 @@ class ProductController extends AbstractController
      * @Route("", methods={"GET", "POST"}, name="list")
      *
      */
-    public function list() : Response
+    public function list(ProductRepository $repository) : Response
     {
-        $products = $this->em->getRepository(Product::class)->findBy(['creator' => $this->getUser()]);
+        $products = $repository->findBy(['creator' => $this->getUser()]);
 
-        return $this->render('product/index.html.twig', [
+        return $this->render('admin/product/index.html.twig', [
             'products' => $products
         ]);
 

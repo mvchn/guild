@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +16,12 @@ class OrderType extends AbstractType
         $builder
             ->add('name')
             ->add('email', null, ['help' => 'Link will be sent to email']) //TODO: or phone
-            ->add('save', SubmitType::class, ['label' => 'Create'])
+            ->add('status', ChoiceType::class, ['choices' => [
+                'new' => 'new',
+                'sent' => 'sent',
+                'completed' => 'completed'
+            ]])
+            ->add('save', SubmitType::class, ['label' => 'Save'])
         ;
     }
 

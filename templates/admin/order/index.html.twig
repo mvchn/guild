@@ -14,14 +14,8 @@
 {% endblock page_header %}
 
 {% block content %}
-    {% for label, messages in app.flashes(['success', 'warning']) %}
-        {% for message in messages -%}
-            <div class="alert alert-{{ label }} border-0 alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
-                {{ message }}
-            </div>
-        {% endfor -%}
-    {% endfor %}
+
+    {% include 'default/_flash_messages.html.twig' %}
 
     <div class="card">
         <div class="card-header header-elements-inline">
@@ -38,16 +32,34 @@
                         <th>Email</th>
                         <th>Name</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
+                    {%
+                        set statuses = {
+                            'new' : 'primary',
+                            'sent' : 'secondary',
+                            'completed' : 'success'
+                        }
+                    %}
                     {% for order in orders -%}
                     <tr>
                         <td>{{ order.id }}</td>
                         <td>{{ order.createdAt|date }}</td>
                         <td>{{ order.email }}</td>
                         <td>{{ order.name }}</td>
-                        <td>{{ order.status }}</td>
+                        <td>
+                            {% if order.status in statuses|keys %}
+                                <span class="badge badge-{{ attribute(statuses, order.status) }}">{{ order.status }}</span>
+                            {% else %}
+                                <span class="badge badge-warning">{{ order.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_orders_edit', {'id': order.id}) }}" class="btn btn-outline-primary btn-sm">{{ 'Edit'|trans }}</a>
+                            <a href="{{ path('admin_orders_show', {'id': order.id}) }}" class="btn btn-outline-primary btn-sm">{{ 'Show'|trans }}</a>
+                        </td>
                     </tr>
                     {% endfor -%}
                     </tbody>
