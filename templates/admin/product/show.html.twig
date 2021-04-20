@@ -3,7 +3,7 @@
 {% block page_header %}
     <div class="page-header-content header-elements-md-inline">
         <div class="page-title d-flex">
-            <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">New product</span></h4>
+            <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">{{ 'Product'|trans }}</span></h4>
             <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
         </div>
     </div>
@@ -12,11 +12,42 @@
 {% block content %}
     <div class="card">
         <div class="card-header header-elements-inline">
-            <h5 class="card-title">{{ 'Products'|trans }}</h5>
+            <h5 class="card-title">{{ product.title }}</h5>
         </div>
         <div class="card-body">
-            {{ product.title }}
             {{ product.destinationUrl }}
+        </div>
+    </div>
+
+
+
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">{{ 'Attributes'|trans }}</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for attribute in product.attributes -%}
+                        <tr>
+                            <td>{{ attribute.name }}</td>
+                            <td>{{ attribute.type }}</td>
+                        </tr>
+                    {% endfor -%}
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <br>
+            {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+            {{ form(form) }}
         </div>
     </div>
 {% endblock %}
