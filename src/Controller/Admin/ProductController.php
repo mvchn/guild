@@ -128,7 +128,10 @@ class ProductController extends AbstractController
             $formBuilder = $this->createFormBuilder();
 
             foreach ($product->getAttributes() as $attribute) {
-                $formBuilder->add($attribute->getName());
+                //TODO: need to set attribute by default
+                $formBuilder->add($attribute->getName(), $attribute->getType(), [
+                    'label' => $attribute->getLabel(),
+                ]);
             }
 
             $formResult = $formBuilder->getForm();
