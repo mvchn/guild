@@ -27,6 +27,7 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/product/{id}", methods={"GET"}, name="product_show", requirements={"id"="\d+"})
+     * @Route("/product/{id}/attribute", methods={"POST"}, name="attribute_create", requirements={"id"="\d+"})
      * @ParamConverter("product", class="App:Product")
      */
     public function show(Product $product): Response

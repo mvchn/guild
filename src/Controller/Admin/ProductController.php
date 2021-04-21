@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Product;
 use App\Event\ProductEvent;
+use App\Form\AttributeType;
 use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -109,14 +110,49 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/{id}", methods={"GET"}, name="show",  requirements={"id"="\d+"})
+     * @Route("/{id}/attribute", methods={"POST"}, name="add_attribute",  requirements={"id"="\d+"})
      * @ParamConverter("product", class="App:Product")
      *
      */
-    public function show(Product $product) : Response
+    public function show(Product $product, Request $request) : Response
     {
-        return $this->render('admin/product/show.html.twig', [
-            'product' => $product,
+        $form = $this->createForm(AttributeType::class, null, [
+            'action' => $this->generateUrl('admin_products_add_attribute', ['id' => $product->getId()])
         ]);
-    }
 
+        $form->handleRequest($request);
+
+        if (!($form->isSubmitted() && $form->isValid())) {
+
+            //TODO: get builder from service
+            $formBuilder = $this->createFormBuilder();
+
+            foreach ($product->getAttributes() as $attribute) {
+                $formBuilder->add($attribute->getName());
+            }
+
+            $formResult = $formBuilder->getForm();
+
+            return $this->render('admin/product/show.html.twig', [
+                'product' => $product,
+                'form' => $form->createView(),
+                'formResult' => $formResult->createView()
+            ]);
+        }
+
+        $attribute = $form->getData();
+        $attribute->setProduct($product);
+
+        $this->getDoctrine()->getManager()->persist($attribute);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $this->addFlash(
+            'success',
+            sprintf('Attribute %s added', $attribute->getName())
+        );
+
+        return $this->redirectToRoute('admin_products_show', ['id' => $product->getId()]);
+
+    }
 }

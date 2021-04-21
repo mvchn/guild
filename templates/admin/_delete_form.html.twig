@@ -1,0 +1,7 @@
+<form action="{{ url('admin_attributes_remove', {id: item.id}) }}" method="post" data-confirmation="true" id="delete-form">
+    <input type="hidden" name="token" value="{{ csrf_token('remove') }}" />
+    <button type="submit" class="btn btn-lg btn-outline-danger">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        {{ 'action.remove'|trans }}
+    </button>
+</form>

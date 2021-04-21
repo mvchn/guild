@@ -54,10 +54,16 @@ class Order
      */
     private $status;
 
+    /**
+     * @ORM\OneToMany(targetEntity=OrderAttribute::class, mappedBy="ordr")
+     */
+    private $orderAttributes;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->status = 'new';
+        $this->orderAttributes = new ArrayCollection();
     }
 
     /**
@@ -151,6 +157,36 @@ class Order
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderAttribute[]
+     */
+    public function getOrderAttributes(): Collection
+    {
+        return $this->orderAttributes;
+    }
+
+    public function addOrderAttribute(OrderAttribute $orderAttribute): self
+    {
+        if (!$this->orderAttributes->contains($orderAttribute)) {
+            $this->orderAttributes[] = $orderAttribute;
+            $orderAttribute->setOrdr($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderAttribute(OrderAttribute $orderAttribute): self
+    {
+        if ($this->orderAttributes->removeElement($orderAttribute)) {
+            // set the owning side to null (unless already changed)
+            if ($orderAttribute->getOrdr() === $this) {
+                $orderAttribute->setOrdr(null);
+            }
+        }
 
         return $this;
     }

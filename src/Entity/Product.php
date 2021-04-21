@@ -55,9 +55,15 @@ class Product
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Attribute::class, mappedBy="product")
+     */
+    private $attributes;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
+        $this->attributes = new ArrayCollection();
     }
 
     /**
@@ -154,6 +160,36 @@ class Product
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attribute[]
+     */
+    public function getAttributes(): Collection
+    {
+        return $this->attributes;
+    }
+
+    public function addAttribute(Attribute $attribute): self
+    {
+        if (!$this->attributes->contains($attribute)) {
+            $this->attributes[] = $attribute;
+            $attribute->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttribute(Attribute $attribute): self
+    {
+        if ($this->attributes->removeElement($attribute)) {
+            // set the owning side to null (unless already changed)
+            if ($attribute->getProduct() === $this) {
+                $attribute->setProduct(null);
+            }
+        }
 
         return $this;
     }
