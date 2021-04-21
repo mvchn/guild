@@ -10,6 +10,8 @@
 {% endblock page_header %}
 
 {% block content %}
+    {% include 'default/_flash_messages.html.twig' %}
+
     <div class="card">
         <div class="card-header header-elements-inline">
             <h5 class="card-title">{{ product.title }}</h5>
@@ -20,34 +22,62 @@
     </div>
 
 
-
-    <div class="card">
-        <div class="card-header header-elements-inline">
-            <h5 class="card-title">{{ 'Attributes'|trans }}</h5>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for attribute in product.attributes -%}
-                        <tr>
-                            <td>{{ attribute.name }}</td>
-                            <td>{{ attribute.type }}</td>
-                        </tr>
-                    {% endfor -%}
-                    </tbody>
-                </table>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h5 class="card-title">{{ 'Attributes'|trans }}</h5>
             </div>
-            <br>
-            <br>
-            {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
-            {{ form(form) }}
+            <div class="card-body">
+                {% if product.attributes|length > 0  %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Label</th>
+                            <th>Required</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for attribute in product.attributes -%}
+                            <tr>
+                                <td>{{ attribute.name }}</td>
+                                <td>{{ attribute.type }}</td>
+                                <td>{{ attribute.label }}</td>
+                                <td>{{ attribute.required }}</td>
+                                <td>
+                                   {{ include('admin/_delete_confirmation.html.twig') }}
+                                   {{ include('admin/_delete_form.html.twig', { item: attribute }, with_context = false) }}
+                                </td>
+                            </tr>
+                        {% endfor -%}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                    <div><i>No attributes</i></div>
+                {% endif %}
+                <br>
+                <br>
+                {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+                {{ form(form) }}
+            </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header header-elements-inline">
+                <h5 class="card-title">{{ 'Form'|trans }}</h5>
+            </div>
+            <div class="card-body">
+                {% form_theme formResult 'bootstrap_4_horizontal_layout.html.twig' %}
+                {{ form(formResult) }}
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

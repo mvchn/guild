@@ -123,9 +123,20 @@ class ProductController extends AbstractController
         $form->handleRequest($request);
 
         if (!($form->isSubmitted() && $form->isValid())) {
+
+            //TODO: get builder from service
+            $formBuilder = $this->createFormBuilder();
+
+            foreach ($product->getAttributes() as $attribute) {
+                $formBuilder->add($attribute->getName());
+            }
+
+            $formResult = $formBuilder->getForm();
+
             return $this->render('admin/product/show.html.twig', [
                 'product' => $product,
                 'form' => $form->createView(),
+                'formResult' => $formResult->createView()
             ]);
         }
 
@@ -144,5 +155,4 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('admin_products_show', ['id' => $product->getId()]);
 
     }
-
 }

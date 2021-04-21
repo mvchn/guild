@@ -29,6 +29,16 @@ class Attribute
     private $type;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $label;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $help;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $required;
@@ -69,6 +79,30 @@ class Attribute
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getLabel(): ?string
+    {
+        return $this->label;
+    }
+
+    public function setLabel(string $label): self
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    public function getHelp(): ?string
+    {
+        return $this->help;
+    }
+
+    public function setHelp(?string $help): self
+    {
+        $this->help = $help;
 
         return $this;
     }

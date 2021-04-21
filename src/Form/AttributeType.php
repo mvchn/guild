@@ -19,7 +19,14 @@ class AttributeType extends AbstractType
                 'string' => 'string',
                 'int' => 'int'
             ]])
-            ->add('required')
+            ->add('label')
+            ->add('help')
+            ->add('required',ChoiceType::class, [
+                'choices'  => [
+                    'Yes' => true,
+                    'No' => false,
+                ],
+            ])
             ->add('submit', SubmitType::class, ['label' => 'Save'])
         ;
     }
