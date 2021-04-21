@@ -4,8 +4,12 @@ namespace App\Form;
 
 use App\Entity\Attribute;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,9 +19,12 @@ class AttributeType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('type', ChoiceType::class, ['choices' => [ //TODO: choose side of type
-                'string' => 'string',
-                'int' => 'int'
+            ->add('type', ChoiceType::class, ['choices' => [
+                'text' => TextType::class,
+                'email' => EmailType::class,
+                'check' => CheckboxType::class,
+                'submit' => SubmitType::class,
+                'large text' => TextareaType::class
             ]])
             ->add('label')
             ->add('help')
