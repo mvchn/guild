@@ -55,7 +55,7 @@ class Order
     private $status;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderAttribute::class, mappedBy="ordr")
+     * @ORM\OneToMany(targetEntity=OrderAttribute::class, mappedBy="ordr", cascade="persist")
      */
     private $orderAttributes;
 
