@@ -19,6 +19,8 @@ class ProductSubscriber implements EventSubscriberInterface
     {
         return [
             ProductEvent::NEW => 'onStoreProduct',
+            ProductEvent::SHOW_ORDER => 'onShowOrder',
+            ProductEvent::CREATE_ORDER => 'onCreateOrder',
         ];
     }
 
@@ -29,6 +31,16 @@ class ProductSubscriber implements EventSubscriberInterface
         $product->setCreator($this->security->getUser());
 
         return $product;
+    }
+
+    public function onShowOrder()
+    {
+        //TODO: need implementation or delet it
+    }
+
+    public function onCreateOrder()
+    {
+        //TODO: need implementation or delet it
     }
 }
 
