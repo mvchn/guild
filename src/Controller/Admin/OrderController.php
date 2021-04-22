@@ -57,11 +57,13 @@ class OrderController extends AbstractController
     /**
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="edit",  requirements={"id"="\d+"})
      * @ParamConverter("product", class="App:Product")
+     * //TODO: use edit order only with special permissions
      *
      */
     public function edit(Order $order, Request $request) : Response
     {
         $form = $this->createForm(OrderType::class, $order);
+
         $status = $order->getStatus();
 
         $form->handleRequest($request);
