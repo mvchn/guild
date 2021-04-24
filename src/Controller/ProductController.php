@@ -78,10 +78,8 @@ class ProductController extends AbstractController
         $this->dispatcher->dispatch($event, ProductEvent::SHOW_ORDER);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $order = (new Order())
-                ->setName('test')
-                ->setEmail('email@email.com')
-            ;
+            $order = new Order();
+
 
             foreach ($form->getData() as $key => $item) {
                 $orderAttribute = (new OrderAttribute())

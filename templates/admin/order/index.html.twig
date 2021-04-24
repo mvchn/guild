@@ -49,8 +49,6 @@
                         <td>{{ order.id }}</td>
                         <td>{{ order.uuid }}</td>
                         <td>{{ order.createdAt|date }}</td>
-                        <td>{{ order.email }}</td>
-                        <td>{{ order.name }}</td>
                         <td>
                             {% if order.status in statuses|keys %}
                                 <span class="badge badge-{{ attribute(statuses, order.status) }}">{{ order.status }}</span>

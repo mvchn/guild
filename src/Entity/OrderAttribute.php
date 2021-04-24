@@ -23,7 +23,7 @@ class OrderAttribute
     private $ordr;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Attribute::class)
+     * @ORM\ManyToOne(targetEntity=Attribute::class, cascade={"persist"})
      */
     private $attribute;
 

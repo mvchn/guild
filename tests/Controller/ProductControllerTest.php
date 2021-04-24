@@ -4,16 +4,20 @@ namespace App\Tests\Controller;
 
 use App\Entity\Order;
 use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ProductControllerTest extends WebTestCase
 {
+    private $productRepository;
+
     /**
      * @dataProvider getRoutes
      */
     public function testShowSuccess(string $route)
     {
         $client = static::createClient();
+        $this->productRepository = static::$container->get(ProductRepository::class);
 
         $client->request('GET', $route);
 
@@ -23,20 +27,26 @@ class ProductControllerTest extends WebTestCase
     public function testAddOrderSuccess()
     {
         $client = static::createClient();
+
         $orderRepository = static::$container->get(OrderRepository::class);
+        $this->productRepository = static::$container->get(ProductRepository::class);
 
-        $client->request('GET', '/product/1/order');
+        $product = $this->productRepository->findOneBy(['title' => 'product123a']);
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $client->request('GET', sprintf('/product/%d', $product->getId()));
+        $this->assertResponseIsSuccessful();
+
+        $client->request('GET', sprintf('/product/%d/order', $product->getId()));
+        $this->assertResponseIsSuccessful();
 
         $client->submitForm('Save', [
-            'order[name]' => 'name',
-            'order[email]' => 'movchan@gmail.com',
+            'form[name]' => 'name',
+            'form[email]' => 'movchan@gmail.com',
         ]);
 
         $this->assertEquals(302, $client->getResponse()->getStatusCode());
 
-        $order = $orderRepository->findOneBy(['name' => 'name', 'email' => 'movchan@gmail.com']);
+        $order = $orderRepository->findOneBy([], ['createdAt' => 'DESC']);
 
         $client->request('GET', sprintf('/orders/%d', $order->getId()));
         $this->assertResponseIsSuccessful();
@@ -46,7 +56,6 @@ class ProductControllerTest extends WebTestCase
 
     public function getRoutes(): iterable
     {
-        yield '1' => ['/product/1'];
         yield 'list' =>  ['/products'];
     }
 
