@@ -28,6 +28,7 @@
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>UUID</th>
                         <th>Created</th>
                         <th>Email</th>
                         <th>Name</th>
@@ -46,6 +47,7 @@
                     {% for order in orders -%}
                     <tr>
                         <td>{{ order.id }}</td>
+                        <td>{{ order.uuid }}</td>
                         <td>{{ order.createdAt|date }}</td>
                         <td>{{ order.email }}</td>
                         <td>{{ order.name }}</td>

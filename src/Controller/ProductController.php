@@ -107,8 +107,7 @@ class ProductController extends AbstractController
                 'Order created'
             );
 
-            //TODO: redirect to thank you page
-            return $this->redirectToRoute('order_show', ['id' => $order->getId()]);
+            return $this->redirectToRoute('order_show_uuid', ['uuid' => (string)$order->getUuid()]);
         }
 
         return $this->render('product/order.html.twig', [
