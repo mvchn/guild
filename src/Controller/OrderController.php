@@ -12,6 +12,7 @@ class OrderController extends AbstractController
 {
     /**
      * @Route("/orders/{id}", methods={"GET"}, name="order_show", requirements={"id"="\d+"})
+     * @Route("/orders/{uuid}", methods={"GET"}, name="order_show_uuid")
      * @ParamConverter("order", class="App:Order")
      */
     public function show(Order $order): Response

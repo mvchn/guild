@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
@@ -21,6 +22,11 @@ class Order
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="uuid")
+     */
+    private $uuid;
 
     /**
      * @ORM\Column(type="datetime")
@@ -63,6 +69,7 @@ class Order
     {
         $this->products = new ArrayCollection();
         $this->status = 'new';
+        $this->uuid =  Uuid::v4();
         $this->orderAttributes = new ArrayCollection();
     }
 
@@ -82,6 +89,11 @@ class Order
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUuid() : ?Uuid
+    {
+        return $this->uuid;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
@@ -190,5 +202,4 @@ class Order
 
         return $this;
     }
-
 }
