@@ -6,7 +6,6 @@ use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -42,18 +41,6 @@ class Order
      * @ORM\ManyToMany(targetEntity=Product::class)
      */
     private $products;
-
-    /**
-     * @ORM\Column(type="string", length=128)
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="string", length=64)
-     * @Assert\Email()
-     *
-     */
-    private $email;
 
     /**
      * @ORM\Column(type="string", length=32)
@@ -133,30 +120,6 @@ class Order
     public function removeProduct(Product $product): self
     {
         $this->products->removeElement($product);
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
 
         return $this;
     }

@@ -15,9 +15,12 @@ class ProductFixtures extends Fixture
         $user = $this->getReference('jane_admin');
 
         $product = new Product();
-        $product->setTitle('Test123');
+        $product->setTitle('product123a');
         $product->setCreator($user);
         $manager->persist($product);
+
+        $this->addReference($product->getTitle(), $product);
+
         $manager->flush();
     }
 }

@@ -8,6 +8,23 @@
                 <h1>{{ 'Order'|trans }} {{ order.id }}</h1>
                 <br>
                 <p>{{ order.status }}</p>
+                <div class="table-responsive">
+                    <table class="table">
+                        {% for attribute in order.orderAttributes %}
+                        <tr>
+                            <td>{{ attribute.attribute.name }}</td>
+                            <td>{{ attribute.value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <form action="{{ url('order_show_uuid', {uuid: order.uuid}) }}" method="post" id="delete-form">
+                    <input type="hidden" name="token" value="{{ csrf_token('remove') }}" />
+                    <button type="submit" class="btn btn-lg btn-outline-danger">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        {{ 'action.confirm'|trans }}
+                    </button>
+                </form>
             </div>
         </div>
     </div>
