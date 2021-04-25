@@ -49,10 +49,10 @@ class Attribute
      */
     private $product;
 
-    public function __construct()
-    {
-        $this->type = 'string';
-    }
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $verify;
 
     public function __toString()
     {
@@ -132,6 +132,18 @@ class Attribute
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getVerify(): ?bool
+    {
+        return $this->verify;
+    }
+
+    public function setVerify(bool $verify): self
+    {
+        $this->verify = $verify;
 
         return $this;
     }

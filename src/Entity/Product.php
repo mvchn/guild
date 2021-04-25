@@ -56,7 +56,7 @@ class Product
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Attribute::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=Attribute::class, mappedBy="product", cascade={"persist"})
      */
     private $attributes;
 
