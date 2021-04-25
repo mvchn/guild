@@ -32,6 +32,11 @@ class OrderAttribute
      */
     private $value;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isVerified;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class OrderAttribute
     public function setValue(string $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(?bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
 
         return $this;
     }

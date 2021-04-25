@@ -24,13 +24,15 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
             ->setName('name')
             ->setType(EmailType::class)
             ->setRequired(true)
-            ->setLabel('Email')
+            ->setLabel('Name')
+            ->setVerify(false)
         ;
         $attributeEmail = (new Attribute())
             ->setName('email')
             ->setType(EmailType::class)
             ->setRequired(true)
             ->setLabel('Email')
+            ->setVerify(true)
         ;
 
         $product->addAttribute($attributeName);

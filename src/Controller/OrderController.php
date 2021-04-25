@@ -37,8 +37,6 @@ class OrderController extends AbstractController
      */
     public function confirm(Order $order): Response
     {
-        $order->setStatus('confirmed');
-
         $event = new OrderEvent($order);
         $this->eventDispatcher->dispatch($event, OrderEvent::CONFIRMED);
 
