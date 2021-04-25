@@ -21,6 +21,7 @@ class ProductSubscriber implements EventSubscriberInterface
             ProductEvent::NEW => 'onStoreProduct',
             ProductEvent::SHOW_ORDER => 'onShowOrder',
             ProductEvent::CREATE_ORDER => 'onCreateOrder',
+            AttributeEvent::NEW => 'onCreateAttribute',
         ];
     }
 
@@ -33,6 +34,14 @@ class ProductSubscriber implements EventSubscriberInterface
         return $product;
     }
 
+    public function onCreateAttribute(AttributeEvent $event)
+    {
+        $attribute = $event->getAttribute();
+        if('email' === $attribute->getName()) {
+            $attribute->setVerify(true);
+        }
+    }
+
     public function onShowOrder()
     {
         //TODO: need implementation or delet it
@@ -42,5 +51,6 @@ class ProductSubscriber implements EventSubscriberInterface
     {
         //TODO: need implementation or delet it
     }
+
 }
 

@@ -56,7 +56,7 @@ class OrderController extends AbstractController
 
     /**
      * @Route("/{id}/edit", methods={"GET", "POST"}, name="edit",  requirements={"id"="\d+"})
-     * @ParamConverter("product", class="App:Product")
+     * @ParamConverter("product", class="App:Order")
      * //TODO: use edit order only with special permissions
      *
      */
@@ -80,12 +80,12 @@ class OrderController extends AbstractController
                     'Order completed'
                 );
 
-                $this->mailer->send((new Email())
-                    ->subject(sprintf('Order %s completed', (string)$order->getId())) //TODO: generate non-autoincrement id
-                    ->from('admin@example.com')
-                    ->to($order->getEmail())
-                    ->text(sprintf('Your result link: %s', $order->getProducts()->first()->getDestinationUrl()))
-                );
+//                $this->mailer->send((new Email())
+//                    ->subject(sprintf('Order %s completed', (string)$order->getId())) //TODO: generate non-autoincrement id
+//                    ->from('admin@example.com')
+//                    ->to($order->getEmail())
+//                    ->text(sprintf('Your result link: %s', $order->getProducts()->first()->getDestinationUrl()))
+//                );
             }
 
             $this->getDoctrine()->getManager()->flush();

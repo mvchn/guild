@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
+use App\Event\AttributeEvent;
 use App\Event\ProductEvent;
 use App\Form\AttributeType;
 use App\Form\Type\ProductType;
@@ -144,9 +145,10 @@ class ProductController extends AbstractController
         }
 
         $attribute = $form->getData();
-        $attribute->setProduct($product);
+        $product->addAttribute($attribute);
 
-        $this->getDoctrine()->getManager()->persist($attribute);
+        $event = new AttributeEvent($attribute);
+        $this->dispatcher->dispatch($event, AttributeEvent::NEW);
 
         $this->getDoctrine()->getManager()->flush();
 

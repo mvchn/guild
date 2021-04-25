@@ -23,7 +23,8 @@ class ProductSubscriberTest extends TestCase
         $this->assertEquals([
             'product.new' => 'onStoreProduct',
             'product.order' => 'onShowOrder',
-            'create.order' => 'onCreateOrder'
+            'create.order' => 'onCreateOrder',
+            'attribute.new' => 'onCreateAttribute'
 
         ], $events);
     }
