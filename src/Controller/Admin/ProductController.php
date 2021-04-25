@@ -3,11 +3,13 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Product;
+use App\Entity\Stock;
 use App\Event\AttributeEvent;
 use App\Event\ProductEvent;
 use App\Form\AttributeType;
 use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
+use App\Repository\StockRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -121,6 +123,8 @@ class ProductController extends AbstractController
             'action' => $this->generateUrl('admin_products_add_attribute', ['id' => $product->getId()])
         ]);
 
+        $stock = $this->getDoctrine()->getManager()->getRepository(Stock::class)->findBy(['product' => $product->getId()]);
+
         $form->handleRequest($request);
 
         if (!($form->isSubmitted() && $form->isValid())) {
@@ -139,6 +143,7 @@ class ProductController extends AbstractController
 
             return $this->render('admin/product/show.html.twig', [
                 'product' => $product,
+                'stock' => $stock,
                 'form' => $form->createView(),
                 'formResult' => $formResult->createView()
             ]);

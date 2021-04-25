@@ -21,6 +21,33 @@
         </div>
     </div>
 
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">{{ 'Stock'|trans }}</h5>
+        </div>
+        <div class="card-body">
+            {% if stock is defined and stock|length > 0  %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for action in stock -%}
+                            <tr>
+                                <td>{{ action.startAt|date }}</td>
+                            </tr>
+                        {% endfor -%}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div><i>No stock</i></div>
+            {% endif %}
+        </div>
+    </div>
 
 <div class="row">
     <div class="col-md-6">

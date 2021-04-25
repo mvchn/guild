@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=StockRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Stock
 {
@@ -38,6 +39,27 @@ class Stock
      */
     private $amount;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $startAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $finishAt;
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateTimestamps()
+    {
+        if(null === $this->createdAt) {
+            $this->createdAt = new \DateTime();
+        }
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,13 +82,6 @@ class Stock
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
     public function getType(): ?string
     {
         return $this->type;
@@ -87,6 +102,30 @@ class Stock
     public function setAmount(int $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getStartAt(): ?\DateTimeInterface
+    {
+        return $this->startAt;
+    }
+
+    public function setStartAt(\DateTimeInterface $startAt): self
+    {
+        $this->startAt = $startAt;
+
+        return $this;
+    }
+
+    public function getFinishAt(): ?\DateTimeInterface
+    {
+        return $this->finishAt;
+    }
+
+    public function setFinishAt(?\DateTimeInterface $finishAt): self
+    {
+        $this->finishAt = $finishAt;
 
         return $this;
     }
