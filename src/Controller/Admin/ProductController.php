@@ -7,9 +7,9 @@ use App\Entity\Stock;
 use App\Event\AttributeEvent;
 use App\Event\ProductEvent;
 use App\Form\AttributeType;
+use App\Form\StockType;
 use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
-use App\Repository\StockRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -114,6 +114,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/{id}", methods={"GET"}, name="show",  requirements={"id"="\d+"})
      * @Route("/{id}/attribute", methods={"POST"}, name="add_attribute",  requirements={"id"="\d+"})
+     * @Route("/{id}/stock", methods={"POST"}, name="add_stock",  requirements={"id"="\d+"})
      * @ParamConverter("product", class="App:Product")
      *
      */
@@ -123,10 +124,27 @@ class ProductController extends AbstractController
             'action' => $this->generateUrl('admin_products_add_attribute', ['id' => $product->getId()])
         ]);
 
+        $formStock = $this->createForm(StockType::class, null, [
+            'action' => $this->generateUrl('admin_products_add_stock', ['id' => $product->getId()])
+        ]);
+
         $stock = $this->getDoctrine()->getManager()->getRepository(Stock::class)->findBy(['product' => $product->getId()]);
 
-        $form->handleRequest($request);
+        $formStock->handleRequest($request);
 
+        if ($formStock->isSubmitted() && $formStock->isValid()) {
+            $item = $formStock->getData();
+            $item->setProduct($product);
+            $item->setType('type');
+            $item->setAmount(0);
+
+            $this->getDoctrine()->getManager()->persist($item);
+
+            $this->getDoctrine()->getManager()->flush();
+
+        }
+
+        $form->handleRequest($request);
         if (!($form->isSubmitted() && $form->isValid())) {
 
             //TODO: get builder from service
@@ -145,7 +163,8 @@ class ProductController extends AbstractController
                 'product' => $product,
                 'stock' => $stock,
                 'form' => $form->createView(),
-                'formResult' => $formResult->createView()
+                'formResult' => $formResult->createView(),
+                'formStock' => $formStock->createView()
             ]);
         }
 

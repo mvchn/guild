@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ product.title }}</h5>
                     <p class="card-text">{{ product.description }}</p>
-                    <a href="{{ path('product_order', {"id": product.id}) }}" class="btn btn-primary">{{ 'Order'|trans }}</a>
+                    <a href="{{ path('product_show', {"id": product.id}) }}" class="btn btn-primary">{{ 'Show'|trans }}</a>
                 </div>
             </div>
             {% endfor %}
