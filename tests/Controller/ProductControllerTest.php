@@ -36,7 +36,7 @@ class ProductControllerTest extends WebTestCase
         $client->request('GET', sprintf('/product/%d', $product->getId()));
         $this->assertResponseIsSuccessful();
 
-        $client->request('GET', sprintf('/product/%d/order', $product->getId()));
+        $client->request('GET', sprintf('/product/%d/order/%d', $product->getId(), $product->getStocks()->first()->getId()));
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('Save', [
