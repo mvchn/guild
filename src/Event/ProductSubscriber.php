@@ -47,7 +47,7 @@ class ProductSubscriber implements EventSubscriberInterface
         //TODO: need implementation or delet it
     }
 
-    public function onCreateOrder()
+    public function onCreateOrder(ProductEvent $event)
     {
         //TODO: need implementation or delet it
     }

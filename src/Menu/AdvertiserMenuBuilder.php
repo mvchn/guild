@@ -46,7 +46,7 @@ class AdvertiserMenuBuilder
             ->setExtra('icon', 'icon-home4')
         ;
 
-        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'products_list' ? 'active' : '';
+        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'admin_products_list' ? 'active' : '';
         $menu->addChild($this->translator->trans('Products', [], 'app'), ['route' =>'admin_products_list'])
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))
@@ -54,7 +54,7 @@ class AdvertiserMenuBuilder
             ->setExtra('icon', 'icon-stack')
         ;
 
-        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'orders_list' ? 'active' : '';
+        $activeClass = $this->router->match($request->getPathInfo())['_route'] === 'admin_orders_list' ? 'active' : '';
         $menu->addChild($this->translator->trans('Orders', [], 'app'), ['route' =>'admin_orders_list'])
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', sprintf('nav-link %s', $activeClass))

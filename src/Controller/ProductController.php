@@ -6,6 +6,7 @@ use App\Entity\Attribute;
 use App\Entity\Order;
 use App\Entity\OrderAttribute;
 use App\Entity\Product;
+use App\Entity\Stock;
 use App\Event\ProductEvent;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -40,22 +41,26 @@ class ProductController extends AbstractController
 
     /**
      * @Route("/product/{id}", methods={"GET"}, name="product_show", requirements={"id"="\d+"})
-     * @Route("/product/{id}/attribute", methods={"POST"}, name="attribute_create", requirements={"id"="\d+"})
      * @ParamConverter("product", class="App:Product")
      */
     public function show(Product $product): Response
     {
+        $stock = $this->getDoctrine()->getManager()->getRepository(Stock::class)->findBy(['product' => $product->getId()]);
+
         return $this->render('product/show_order.html.twig', [
             'product' => $product,
+            'stock' => $stock,
         ]);
     }
 
     /**
-     * @Route("/product/{id}/order", methods={"GET", "POST"}, name="product_order", requirements={"id"="\d+"})
+     * @Route("/product/{id}/order/{stockId}", methods={"GET", "POST"}, name="product_order", requirements={"id"="\d+", "stockId"="\d+"})
      * @ParamConverter("product", class="App:Product")
      */
-    public function order(Product $product, Request $request): Response
+    public function order(Product $product, int $stockId, Request $request): Response
     {
+        $stock = $this->getDoctrine()->getManager()->getRepository(Stock::class)->find($stockId);
+
         //TODO: get builder from service
         $formBuilder = $this->createFormBuilder();
 
@@ -80,7 +85,6 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $order = new Order();
 
-
             foreach ($form->getData() as $key => $item) {
                 $orderAttribute = (new OrderAttribute())
                     ->setOrdr($order)
@@ -95,7 +99,7 @@ class ProductController extends AbstractController
 
             $this->dispatcher->dispatch($event, ProductEvent::CREATE_ORDER);
 
-            $order->addProduct($product);
+            $order->addProduct($product); //TODO: wrong place
 
             $this->getDoctrine()->getManager()->persist($order);
             $this->getDoctrine()->getManager()->flush();
@@ -109,6 +113,7 @@ class ProductController extends AbstractController
         }
 
         return $this->render('product/order.html.twig', [
+            'stock' => $stock,
             'product' => $product,
             'form' => $form->createView()
         ]);

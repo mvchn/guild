@@ -21,6 +21,39 @@
         </div>
     </div>
 
+    {% if stock is defined %}
+    <div class="card">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">{{ 'Stock'|trans }}</h5>
+        </div>
+        <div class="card-body">
+            {% if stock|length > 0 %}
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for action in stock -%}
+                            <tr>
+                                <td>{{ action.id }}</td>
+                                <td>{{ action.startAt|date }}</td>
+                            </tr>
+                        {% endfor -%}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div><i>No stock</i></div>
+            {% endif %}
+            {% form_theme formStock 'bootstrap_4_horizontal_layout.html.twig' %}
+            {{ form(formStock) }}
+        </div>
+    </div>
+    {% endif %}
 
 <div class="row">
     <div class="col-md-6">
@@ -29,7 +62,7 @@
                 <h5 class="card-title">{{ 'Attributes'|trans }}</h5>
             </div>
             <div class="card-body">
-                {% if product.attributes|length > 0  %}
+                {% if product.attributes|length > 0 %}
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
