@@ -22,6 +22,9 @@ $ composer install
 ```
 
 Prepare database
+----
+
+For SQLite:
 
 ```bash
 $ mkdir data
@@ -36,7 +39,21 @@ $ symfony console  doctrine:database:create
 $ symfony console  doctrine:schema:create
 ```
 
+For PostgreSQL:
+
+Change ENV variable to your DSN:
+```bash
+DATABASE_URL="postgresql://main:main@127.0.0.1:5432/main?serverVersion=13&charset=utf8"
+```
+
+Create schema
+
+```bash
+$ symfony console  doctrine:schema:create
+```
+
 Add user
+-----
 
 ```bash
 $ symfony console app:add-user
