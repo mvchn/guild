@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\OrderAttribute;
 use App\Entity\Product;
 use App\Entity\Stock;
+use App\Event\OrderEvent;
 use App\Event\ProductEvent;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -97,7 +98,8 @@ class ProductController extends AbstractController
                 $order->addOrderAttribute($orderAttribute);
             }
 
-            $this->dispatcher->dispatch($event, ProductEvent::CREATE_ORDER);
+            $event = new OrderEvent($order);
+            $this->dispatcher->dispatch($event, OrderEvent::CONFIRMED);
 
             $order->addProduct($product); //TODO: wrong place
 

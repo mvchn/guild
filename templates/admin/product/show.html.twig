@@ -13,7 +13,7 @@
     {% include 'default/_flash_messages.html.twig' %}
 
     <div class="card">
-        <div class="card-header header-elements-inline">
+        <div class="card-header">
             <h5 class="card-title">{{ product.title }}</h5>
         </div>
         <div class="card-body">
@@ -23,7 +23,7 @@
 
     {% if stock is defined %}
     <div class="card">
-        <div class="card-header header-elements-inline">
+        <div class="card-header">
             <h5 class="card-title">{{ 'Stock'|trans }}</h5>
         </div>
         <div class="card-body">
@@ -58,7 +58,7 @@
 <div class="row">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header header-elements-inline">
+            <div class="card-header">
                 <h5 class="card-title">{{ 'Attributes'|trans }}</h5>
             </div>
             <div class="card-body">
@@ -71,6 +71,7 @@
                             <th>Type</th>
                             <th>Label</th>
                             <th>Required</th>
+                            <th>Verify</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -81,6 +82,7 @@
                                 <td>{{ attribute.type }}</td>
                                 <td>{{ attribute.label }}</td>
                                 <td>{{ attribute.required }}</td>
+                                <td>{{ attribute.verify }}</td>
                                 <td>
                                    {{ include('admin/_delete_confirmation.html.twig') }}
                                    {{ include('admin/_delete_form.html.twig', { item: attribute }, with_context = false) }}
@@ -102,7 +104,7 @@
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header header-elements-inline">
+            <div class="card-header">
                 <h5 class="card-title">{{ 'Form'|trans }}</h5>
             </div>
             <div class="card-body">

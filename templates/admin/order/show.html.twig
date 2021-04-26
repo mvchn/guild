@@ -16,6 +16,17 @@
         </div>
         <div class="card-body">
             <p>{{ order.id }}</p>
+            <p>{{ order.status }}</p>
+            <div class="table-responsive">
+                <table class="table">
+                    {% for attribute in order.orderAttributes %}
+                        <tr>
+                            <td>{{ attribute.attribute.name }}</td>
+                            <td>{{ attribute.value }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}
