@@ -70,11 +70,12 @@ class ProductController extends AbstractController
             $formBuilder->add($attribute->getName(), $attribute->getType(), [
                 'label' => $attribute->getLabel(),
                 'required' => $attribute->getRequired(),
+                'help' => $attribute->getHelp(),
                 'constraints' => [new NotBlank()],
             ]);
         }
 
-        $formBuilder->add('save', SubmitType::class, ['label' => 'Save']);
+        $formBuilder->add('save', SubmitType::class, ['label' => 'Confirm']);
 
         $form = $formBuilder->getForm();
 
