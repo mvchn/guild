@@ -25,14 +25,12 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
             ->setType(EmailType::class)
             ->setRequired(true)
             ->setLabel('Name')
-            ->setVerify(false)
         ;
         $attributeEmail = (new Attribute())
             ->setName('email')
             ->setType(EmailType::class)
             ->setRequired(true)
             ->setLabel('Email')
-            ->setVerify(true)
         ;
 
         $product->addAttribute($attributeName);
@@ -41,13 +39,13 @@ class OrderFixtures extends Fixture implements DependentFixtureInterface
         $orderAttributeName = (new OrderAttribute())
                 ->setAttribute($attributeName)
                 ->setValue('test')
-                ->setOrdr($order) //TODO: must remove in next releases
+                //->setOrder($order) //TODO: must remove in next releases
         ;
 
         $orderAttributeEmail = (new OrderAttribute())
             ->setAttribute($attributeEmail)
             ->setValue('test@test.com')
-            ->setOrdr($order) //TODO: must remove in next releases
+            //->setOrder($order) //TODO: must remove in next releases
         ;
 
         $order->addOrderAttribute($orderAttributeName); //TODO: Must implement addAttribute in order
