@@ -141,8 +141,8 @@ class ProductController extends AbstractController
             $this->session->set('order', (string)$order->getUuid());
         }
 
-        $order->addProduct($stock->getProduct());
-        $stock->
+        $stock->setOrder($order); //TODO: maybe choose one
+        $order->setStock($stock);
 
         $this->getDoctrine()->getManager()->persist($order);
         $this->getDoctrine()->getManager()->flush();
@@ -159,11 +159,12 @@ class ProductController extends AbstractController
         //TODO: get builder from service
         $formBuilder = $this->createFormBuilder();
 
-        foreach ($order->getProducts()->first()->getAttributes() as $attribute) { //TODO: check if attributes here
+        foreach ($order->getStock()->getProduct()->getAttributes() as $attribute) { //TODO: check if attributes here
             //TODO: need to set attribute by default
             $formBuilder->add($attribute->getName(), $attribute->getType(), [
                 'label' => $attribute->getLabel(),
                 'required' => $attribute->getRequired(),
+                'help' => $attribute->getHelp(),
                 'constraints' => [new NotBlank()],
             ]);
         }
@@ -173,6 +174,45 @@ class ProductController extends AbstractController
         $form = $formBuilder->getForm();
 
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($form->getData() as $key => $item) {
+                $attribute =  $this->getDoctrine()->getRepository(Attribute::class)->findOneBy([
+                    'product' => $order->getStock()->getProduct(),
+                    'name' => $key
+                ]);
+
+                $orderAttribute = $this->getDoctrine()->getRepository(OrderAttribute::class)->findOneBy([
+                    'order' => $order,
+                    'attribute' => $attribute
+                ]);
+
+                if(!$orderAttribute) {
+                    $orderAttribute = (new OrderAttribute())
+                        ->setOrder($order)
+                        ->setAttribute($this->getDoctrine()->getManager()->getRepository(Attribute::class)->findOneBy([
+                            'product' => $order->getProducts()->first(), //TODO: maybe two products
+                            'name' => $key
+                        ]))
+                        ->setValue($item)
+                    ;
+
+                    $this->getDoctrine()->getManager()->persist($orderAttribute);
+                    $order->addOrderAttribute($orderAttribute);
+                }
+
+                $orderAttribute->setValue($item);
+                $orderAttribute->setAttribute($attribute);
+
+            }
+
+            $event = new OrderEvent($order);
+            $this->dispatcher->dispatch($event, OrderEvent::CONFIRMED);
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('order_show_uuid', ['uuid' => (string)$order->getUuid()]);
+        }
 
         return $this->render('product/order.html.twig', [
             'form' => $form->createView(),
