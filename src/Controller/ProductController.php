@@ -100,7 +100,8 @@ class ProductController extends AbstractController
 
             $event = new OrderEvent($order);
             $this->dispatcher->dispatch($event, OrderEvent::CONFIRMED);
-
+            $order->setStock($stock);  //TODO: maybe wrong place
+            $stock->setOrder($order);  //TODO: maybe wrong place
             $order->addProduct($product); //TODO: wrong place
 
             $this->getDoctrine()->getManager()->persist($order);

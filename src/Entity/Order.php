@@ -52,6 +52,11 @@ class Order
      */
     private $orderAttributes;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Stock::class, cascade={"persist", "remove"})
+     */
+    private $stock;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -167,6 +172,18 @@ class Order
                 $orderAttribute->setOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStock(): ?Stock
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?Stock $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }
