@@ -4,6 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                {% include 'default/_flash_messages.html.twig' %}
                 <h1> {{ product.title }}</h1>
                 <br>
                 {% if stock is defined and stock|length > 0 %}
@@ -15,7 +16,11 @@
                                     {% if item.order is not null %}
                                         {{ item.startAt|date }}
                                         <span>
-                                        {#                                            <a href="{{ url('product_order', {"id":product.id, "stockId":item.id}) }}" class="btn btn-outline-primary">Order {{ item.startAt|date }}</a>#}
+                                            <a href="{{ url('product_order', {"id":product.id, "stockId":item.id}) }}" class="btn btn-outline-primary disabled">Unavailable</a>
+                                        </span>
+                                    {% else %}
+                                        {{ item.startAt|date }}
+                                        <span>
                                         <form action="{{ url('stock_order', {id: item.id}) }}" method="post" id="order-form">
                                             <input type="hidden" name="token" value="{{ csrf_token('order') }}" />
                                             <button type="submit" class="btn btn-outline-primary">
@@ -23,11 +28,6 @@
                                                 Order
                                             </button>
                                         </form>
-                                        </span>
-                                    {% else %}
-                                        {{ item.startAt|date }}
-                                        <span>
-                                            <a href="{{ url('product_order', {"id":product.id, "stockId":item.id}) }}" class="btn btn-outline-primary disabled">Unavailable</a>
                                         </span>
                                     {% endif %}
 
