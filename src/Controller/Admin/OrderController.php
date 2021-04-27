@@ -81,6 +81,7 @@ class OrderController extends AbstractController
                 );
 
                 //TODO: get email from order attributes
+
                 $this->mailer->send((new Email())
                     ->subject(sprintf('Order %s completed', (string)$order->getId())) //TODO: generate non-autoincrement id
                     ->from('admin@example.com')
