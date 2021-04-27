@@ -52,11 +52,11 @@ class Order
      */
     private $orderAttributes;
 
-    public function __construct()
+    public function __construct(string $uuidValue = null)
     {
+        $this->uuid = $uuidValue ? Uuid::fromString($uuidValue) : Uuid::v4();
         $this->products = new ArrayCollection();
         $this->status = 'new';
-        $this->uuid =  Uuid::v4();
         $this->orderAttributes = new ArrayCollection();
     }
 
