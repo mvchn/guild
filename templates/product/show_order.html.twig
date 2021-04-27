@@ -8,21 +8,24 @@
                 {% if stock is defined and stock|length > 0 %}
                     <div class="row">
                         <div class="col-md-4">
-                            {% for item in stock %}
-                                <div class="card">
-                                    <div class="card-body">
-                                        <a href="{{ url('product_order', {"id":product.id, "stockId":item.id}) }}" class="btn btn-outline-primary">Order {{ item.startAt|date }}</a>
-
-                                        <form action="{{ url('stock_order', {id: item.id}) }}" method="post" id="order-form">
-                                            <input type="hidden" name="token" value="{{ csrf_token('order') }}" />
-                                            <button type="submit" class="btn btn-lg btn-outline-danger">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                                Order {{ item.startAt|date }}
-                                            </button>
-                                        </form>
-                                    </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    {% for item in stock %}
+                                        {% if item.order is not null %}
+                                            <a href="{{ url('product_order', {"id":product.id, "stockId":item.id}) }}" class="btn btn-outline-primary">Order {{ item.startAt|date }}</a>
+                                            <form action="{{ url('stock_order', {id: item.id}) }}" method="post" id="order-form">
+                                                <input type="hidden" name="token" value="{{ csrf_token('order') }}" />
+                                                <button type="submit" class="btn btn-lg btn-outline-danger">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    Order {{ item.startAt|date }}
+                                                </button>
+                                            </form>
+                                        {% else %}
+                                            <a href="{{ url('product_order', {"id":product.id, "stockId":item.id}) }}" class="btn btn-outline-primary disabled">Unavailable {{ item.startAt|date }}</a>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
+                            </div>
                         </div>
                     </div>
                 {% else %}

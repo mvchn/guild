@@ -50,6 +50,11 @@ class Stock
     private $finishAt;
 
     /**
+     * @ORM\OneToOne(targetEntity=Order::class, cascade={"persist", "remove"})
+     */
+    private $order;
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -126,6 +131,18 @@ class Stock
     public function setFinishAt(?\DateTimeInterface $finishAt): self
     {
         $this->finishAt = $finishAt;
+
+        return $this;
+    }
+
+    public function getOrder(): ?Order
+    {
+        return $this->order;
+    }
+
+    public function setOrder(?Order $order): self
+    {
+        $this->order = $order;
 
         return $this;
     }
