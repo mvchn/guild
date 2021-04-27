@@ -134,11 +134,21 @@ class ProductController extends AbstractController
     public function createOrder(Stock $stock) : Response
     {
         //TODO: maybe get from cookie
+        //TODO: check order status
         if($this->session->get('order')) {
             $order = new Order($this->session->get('order'));
         } else {
             $order = new Order();
             $this->session->set('order', (string)$order->getUuid());
+        }
+
+        if($stock->getOrder()) {
+            $this->addFlash(
+                'warning',
+                'Order not created'
+            );
+
+            return $this->redirectToRoute('product_show', ['id' => $stock->getProduct()->getId()]);
         }
 
         $stock->setOrder($order); //TODO: maybe choose one
