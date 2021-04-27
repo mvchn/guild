@@ -20,7 +20,7 @@ class OrderAttribute
     /**
      * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="orderAttributes")
      */
-    private $ordr;
+    private $order;
 
     /**
      * @ORM\ManyToOne(targetEntity=Attribute::class, cascade={"persist"})
@@ -42,14 +42,14 @@ class OrderAttribute
         return $this->id;
     }
 
-    public function getOrdr(): ?Order
+    public function getOrder(): ?Order
     {
-        return $this->ordr;
+        return $this->order;
     }
 
-    public function setOrdr(?Order $ordr): self
+    public function setOrder(?Order $order): self
     {
-        $this->ordr = $ordr;
+        $this->order = $order;
 
         return $this;
     }

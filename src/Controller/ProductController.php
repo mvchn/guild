@@ -88,7 +88,7 @@ class ProductController extends AbstractController
 
             foreach ($form->getData() as $key => $item) {
                 $orderAttribute = (new OrderAttribute())
-                    ->setOrdr($order)
+                    ->setOrder($order)
                     ->setAttribute($this->getDoctrine()->getManager()->getRepository(Attribute::class)->findOneBy([
                         'product' => $product,
                         'name' => $key
