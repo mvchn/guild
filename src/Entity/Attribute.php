@@ -4,10 +4,15 @@ namespace App\Entity;
 
 use App\Repository\AttributeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=AttributeRepository::class)
- * @ORM\Table(name="attributes")
+ * @UniqueEntity(
+ *     fields={"name", "product"}
+ * )
+ * @ORM\Table(name="attributes", uniqueConstraints={
+ *     @ORM\UniqueConstraint(columns={"name", "product_id"})})
  */
 class Attribute
 {
@@ -71,7 +76,7 @@ class Attribute
 
     public function setName(string $name): self
     {
-        $this->name = $name;
+        $this->name = mb_strtolower($name);
 
         return $this;
     }

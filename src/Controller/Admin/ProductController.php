@@ -10,6 +10,7 @@ use App\Form\AttributeType;
 use App\Form\StockType;
 use App\Form\Type\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -174,7 +175,17 @@ class ProductController extends AbstractController
         $event = new AttributeEvent($attribute);
         $this->dispatcher->dispatch($event, AttributeEvent::NEW);
 
-        $this->getDoctrine()->getManager()->flush();
+        try {
+            $this->getDoctrine()->getManager()->flush();
+        } catch (UniqueConstraintViolationException $exception) {
+            //TODO: add logger
+            $this->addFlash(
+                'warning',
+                sprintf('Attribute %s can not be added because already exists', $attribute->getName())
+            );
+
+            return $this->redirectToRoute('admin_products_show', ['id' => $product->getId()]);
+        }
 
         $this->addFlash(
             'success',

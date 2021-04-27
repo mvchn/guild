@@ -24,6 +24,7 @@ class OrderAttribute
 
     /**
      * @ORM\ManyToOne(targetEntity=Attribute::class, cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $attribute;
 
