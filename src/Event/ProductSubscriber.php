@@ -37,6 +37,9 @@ class ProductSubscriber implements EventSubscriberInterface
     public function onCreateAttribute(AttributeEvent $event)
     {
         $attribute = $event->getAttribute();
+
+        $attribute->setVerify(false);
+
         if('email' === $attribute->getName()) {
             $attribute->setVerify(true);
         }
