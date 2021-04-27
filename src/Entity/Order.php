@@ -52,11 +52,17 @@ class Order
      */
     private $orderAttributes;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Stock::class, cascade={"persist", "remove"})
+     */
+    private $stock;
+
     public function __construct(string $uuidValue = null)
     {
         $this->uuid = $uuidValue ? Uuid::fromString($uuidValue) : Uuid::v4();
         $this->products = new ArrayCollection();
         $this->status = 'new';
+        $this->uuid =  Uuid::v4();
         $this->orderAttributes = new ArrayCollection();
     }
 
@@ -167,6 +173,18 @@ class Order
                 $orderAttribute->setOrder(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStock(): ?Stock
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?Stock $stock): self
+    {
+        $this->stock = $stock;
 
         return $this;
     }
