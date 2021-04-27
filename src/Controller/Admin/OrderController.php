@@ -80,12 +80,13 @@ class OrderController extends AbstractController
                     'Order completed'
                 );
 
-//                $this->mailer->send((new Email())
-//                    ->subject(sprintf('Order %s completed', (string)$order->getId())) //TODO: generate non-autoincrement id
-//                    ->from('admin@example.com')
-//                    ->to($order->getEmail())
-//                    ->text(sprintf('Your result link: %s', $order->getProducts()->first()->getDestinationUrl()))
-//                );
+                //TODO: get email from order attributes
+                $this->mailer->send((new Email())
+                    ->subject(sprintf('Order %s completed', (string)$order->getId())) //TODO: generate non-autoincrement id
+                    ->from('admin@example.com')
+                    //->to($order->getEmail())
+                    ->text(sprintf('Your result link: %s', $order->getProducts()->first()->getDestinationUrl()))
+                );
             }
 
             $this->getDoctrine()->getManager()->flush();
