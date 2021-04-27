@@ -48,7 +48,7 @@ class Order
     private $status;
 
     /**
-     * @ORM\OneToMany(targetEntity=OrderAttribute::class, mappedBy="ordr", cascade="persist")
+     * @ORM\OneToMany(targetEntity=OrderAttribute::class, mappedBy="order", cascade="persist")
      */
     private $orderAttributes;
 
@@ -58,6 +58,11 @@ class Order
         $this->status = 'new';
         $this->uuid =  Uuid::v4();
         $this->orderAttributes = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return (string)$this->uuid;
     }
 
     /**
@@ -148,7 +153,7 @@ class Order
     {
         if (!$this->orderAttributes->contains($orderAttribute)) {
             $this->orderAttributes[] = $orderAttribute;
-            $orderAttribute->setOrdr($this);
+            $orderAttribute->setOrder($this);
         }
 
         return $this;
@@ -158,8 +163,8 @@ class Order
     {
         if ($this->orderAttributes->removeElement($orderAttribute)) {
             // set the owning side to null (unless already changed)
-            if ($orderAttribute->getOrdr() === $this) {
-                $orderAttribute->setOrdr(null);
+            if ($orderAttribute->getOrder() === $this) {
+                $orderAttribute->setOrder(null);
             }
         }
 
