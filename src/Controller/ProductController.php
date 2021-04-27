@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -23,9 +24,12 @@ class ProductController extends AbstractController
 {
     private $dispatcher;
 
-    public function __construct(EventDispatcherInterface $dispatcher)
+    private $session;
+
+    public function __construct(EventDispatcherInterface $dispatcher, SessionInterface $session)
     {
         $this->dispatcher = $dispatcher;
+        $this->session = $session;
     }
 
     /**
@@ -70,11 +74,12 @@ class ProductController extends AbstractController
             $formBuilder->add($attribute->getName(), $attribute->getType(), [
                 'label' => $attribute->getLabel(),
                 'required' => $attribute->getRequired(),
+                'help' => $attribute->getHelp(),
                 'constraints' => [new NotBlank()],
             ]);
         }
 
-        $formBuilder->add('save', SubmitType::class, ['label' => 'Save']);
+        $formBuilder->add('save', SubmitType::class, ['label' => 'Confirm']);
 
         $form = $formBuilder->getForm();
 
@@ -119,6 +124,59 @@ class ProductController extends AbstractController
             'stock' => $stock,
             'product' => $product,
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/stock/{id}/order", methods={"POST"}, name="stock_order", requirements={"id"="\d+"})
+     * @ParamConverter("stock", class="App:Stock")
+     */
+    public function createOrder(Stock $stock) : Response
+    {
+        //TODO: maybe get from cookie
+        if($this->session->get('order')) {
+            $order = new Order($this->session->get('order'));
+        } else {
+            $order = new Order();
+            $this->session->set('order', (string)$order->getUuid());
+        }
+
+        $order->addProduct($stock->getProduct());
+        $stock->
+
+        $this->getDoctrine()->getManager()->persist($order);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('order_edit', ['uuid' => (string)$order->getUuid()]);
+    }
+
+    /**
+     * @Route("/orders/{uuid}/edit", methods={"GET", "POST"}, name="order_edit")
+     * @ParamConverter("order", class="App:Order")
+     */
+    public function orderEdit(Order $order, Request $request): Response
+    {
+        //TODO: get builder from service
+        $formBuilder = $this->createFormBuilder();
+
+        foreach ($order->getProducts()->first()->getAttributes() as $attribute) { //TODO: check if attributes here
+            //TODO: need to set attribute by default
+            $formBuilder->add($attribute->getName(), $attribute->getType(), [
+                'label' => $attribute->getLabel(),
+                'required' => $attribute->getRequired(),
+                'constraints' => [new NotBlank()],
+            ]);
+        }
+
+        $formBuilder->add('save', SubmitType::class, ['label' => 'Save']);
+
+        $form = $formBuilder->getForm();
+
+        $form->handleRequest($request);
+
+        return $this->render('product/order.html.twig', [
+            'form' => $form->createView(),
+            'order' => $order
         ]);
     }
 }
