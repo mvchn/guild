@@ -14,9 +14,7 @@ class OrderType extends AbstractType
         $builder
             ->add('uuid')
             ->add('createdAt')
-            ->add('updatedAt')
             ->add('status')
-            ->add('products')
         ;
     }
 
