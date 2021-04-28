@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 {% include 'default/_flash_messages.html.twig' %}
-                <h1>{{ 'Order'|trans }} </h1>
+                <h1>{{ 'Order'|trans }} {{ stock.startAt|date }} </h1>
                 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
                 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}

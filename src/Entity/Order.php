@@ -53,7 +53,7 @@ class Order
     private $orderAttributes;
 
     /**
-     * @ORM\OneToOne(targetEntity=Stock::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Stock::class, inversedBy="orders", cascade={"persist", "remove"})
      */
     private $stock;
 
@@ -62,7 +62,6 @@ class Order
         $this->uuid = $uuidValue ? Uuid::fromString($uuidValue) : Uuid::v4();
         $this->products = new ArrayCollection();
         $this->status = 'new';
-        $this->uuid =  Uuid::v4();
         $this->orderAttributes = new ArrayCollection();
     }
 

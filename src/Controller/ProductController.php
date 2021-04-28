@@ -52,7 +52,7 @@ class ProductController extends AbstractController
     {
         $stock = $this->getDoctrine()->getManager()->getRepository(Stock::class)->findBy(['product' => $product->getId()]);
 
-        return $this->render('product/show_order.html.twig', [
+        return $this->render('product/show.html.twig', [
             'product' => $product,
             'stock' => $stock,
         ]);
@@ -128,36 +128,92 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/stock/{id}/order", methods={"POST"}, name="stock_order", requirements={"id"="\d+"})
+     * @Route("/stock/{id}/order", methods={"GET", "POST"}, name="stock_order", requirements={"id"="\d+"})
      * @ParamConverter("stock", class="App:Stock")
      */
-    public function createOrder(Stock $stock) : Response
+    public function createOrder(Stock $stock, Request $request) : Response
     {
         //TODO: maybe get from cookie
         //TODO: check order status
-        if($this->session->get('order')) {
+        if ($this->session->get('order')) {
             $order = new Order($this->session->get('order'));
         } else {
             $order = new Order();
             $this->session->set('order', (string)$order->getUuid());
         }
 
-        if($stock->getOrder()) {
-            $this->addFlash(
-                'warning',
-                'Order not created'
-            );
+        //TODO: get builder from service
+        $formBuilder = $this->createFormBuilder();
 
-            return $this->redirectToRoute('product_show', ['id' => $stock->getProduct()->getId()]);
+        foreach ($stock->getProduct()->getAttributes() as $attribute) { //TODO: check if attributes here
+            //TODO: need to set attribute by default
+            $formBuilder->add($attribute->getName(), $attribute->getType(), [
+                'label' => $attribute->getLabel(),
+                'required' => $attribute->getRequired(),
+                'help' => $attribute->getHelp(),
+                'constraints' => [new NotBlank()],
+            ]);
         }
 
-        $stock->setOrder($order); //TODO: maybe choose one
-        $order->setStock($stock);
+        $formBuilder->add('save', SubmitType::class, ['label' => 'Save']);
 
-        $this->getDoctrine()->getManager()->persist($order);
-        $this->getDoctrine()->getManager()->flush();
+        $form = $formBuilder->getForm();
 
-        return $this->redirectToRoute('order_edit', ['uuid' => (string)$order->getUuid()]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            foreach ($form->getData() as $key => $item) {
+                $attribute =  $this->getDoctrine()->getRepository(Attribute::class)->findOneBy([
+                    'product' => $stock->getProduct(),
+                    'name' => $key
+                ]);
+
+                $orderAttribute = $this->getDoctrine()->getRepository(OrderAttribute::class)->findOneBy([
+                    'order' => $order,
+                    'attribute' => $attribute
+                ]);
+
+                if(!$orderAttribute) {
+                    $orderAttribute = (new OrderAttribute())
+                        ->setOrder($order)
+                        ->setAttribute($this->getDoctrine()->getManager()->getRepository(Attribute::class)->findOneBy([
+                            'product' => $order->getProducts()->first(), //TODO: maybe two products
+                            'name' => $key
+                        ]))
+                        ->setValue($item)
+                    ;
+
+                    $this->getDoctrine()->getManager()->persist($orderAttribute);
+                    $order->addOrderAttribute($orderAttribute);
+                }
+
+                $orderAttribute->setValue($item);
+                $orderAttribute->setAttribute($attribute);
+
+            }
+
+            $stock->addOrder($order); //TODO: maybe choose one
+
+            $this->getDoctrine()->getManager()->persist($order);
+
+            $event = new OrderEvent($order);
+            $this->dispatcher->dispatch($event, OrderEvent::NEW);
+
+            $event = new OrderEvent($order);
+            $this->dispatcher->dispatch($event, OrderEvent::CONFIRMED);
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('order_show_uuid', ['uuid' => (string)$order->getUuid()]);
+
+        }
+
+        return $this->render('product/order.html.twig', [
+            'form' => $form->createView(),
+            'stock' => $stock
+        ]);
+
     }
 
     /**
@@ -166,6 +222,7 @@ class ProductController extends AbstractController
      */
     public function orderEdit(Order $order, Request $request): Response
     {
+        $stock = $order->getStock();
         //TODO: get builder from service
         $formBuilder = $this->createFormBuilder();
 
@@ -188,7 +245,7 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($form->getData() as $key => $item) {
                 $attribute =  $this->getDoctrine()->getRepository(Attribute::class)->findOneBy([
-                    'product' => $order->getStock()->getProduct(),
+                    'product' => $stock->getProduct(),
                     'name' => $key
                 ]);
 
@@ -217,7 +274,7 @@ class ProductController extends AbstractController
             }
 
             $event = new OrderEvent($order);
-            $this->dispatcher->dispatch($event, OrderEvent::CONFIRMED);
+            $this->dispatcher->dispatch($event, OrderEvent::MODIFY);
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -228,5 +285,38 @@ class ProductController extends AbstractController
             'form' => $form->createView(),
             'order' => $order
         ]);
+    }
+
+    private function addAttributes($form, $order, $stock)
+    {
+        foreach ($form->getData() as $key => $item) {
+            $attribute =  $this->getDoctrine()->getRepository(Attribute::class)->findOneBy([
+                'product' => $stock->getProduct(),
+                'name' => $key
+            ]);
+
+            $orderAttribute = $this->getDoctrine()->getRepository(OrderAttribute::class)->findOneBy([
+                'order' => $order,
+                'attribute' => $attribute
+            ]);
+
+            if(!$orderAttribute) {
+                $orderAttribute = (new OrderAttribute())
+                    ->setOrder($order)
+                    ->setAttribute($this->getDoctrine()->getManager()->getRepository(Attribute::class)->findOneBy([
+                        'product' => $order->getProducts()->first(), //TODO: maybe two products
+                        'name' => $key
+                    ]))
+                    ->setValue($item)
+                ;
+
+                $this->getDoctrine()->getManager()->persist($orderAttribute);
+                $order->addOrderAttribute($orderAttribute);
+            }
+
+            $orderAttribute->setValue($item);
+            $orderAttribute->setAttribute($attribute);
+
+        }
     }
 }

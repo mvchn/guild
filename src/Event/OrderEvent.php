@@ -9,6 +9,7 @@ class OrderEvent extends Event
 {
     public const NEW = 'order.new';
     public const CONFIRMED = 'order.confirmed';
+    public const MODIFY = 'order.modify';
 
     protected $order;
 
