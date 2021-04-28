@@ -12,5 +12,9 @@ class DefaultControllerTest extends WebTestCase
         $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
+
+        $client->request('GET', '/pricing');
+
+        $this->assertResponseIsSuccessful();
     }
 }

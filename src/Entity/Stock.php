@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StockRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,9 +52,14 @@ class Stock
     private $finishAt;
 
     /**
-     * @ORM\OneToOne(targetEntity=Order::class, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="stock")
      */
-    private $order;
+    private $orders;
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
     /**
      * @ORM\PrePersist
@@ -135,14 +142,32 @@ class Stock
         return $this;
     }
 
-    public function getOrder(): ?Order
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
     {
-        return $this->order;
+        return $this->orders;
     }
 
-    public function setOrder(?Order $order): self
+    public function addOrder(Order $order): self
     {
-        $this->order = $order;
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setStock($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            // set the owning side to null (unless already changed)
+            if ($order->getStock() === $this) {
+                $order->setStock(null);
+            }
+        }
 
         return $this;
     }
