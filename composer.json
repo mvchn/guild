@@ -9,6 +9,8 @@
         "php": ">=7.2.9",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-xml": "*",
+        "ext-xsl": "*",
         "api-platform/core": "^2.6",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.12",
