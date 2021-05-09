@@ -58,6 +58,4 @@ class ProductControllerTest extends WebTestCase
     {
         yield 'list' =>  ['/products'];
     }
-
-
 }
