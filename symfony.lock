@@ -466,6 +466,9 @@
     "symfony/orm-pack": {
         "version": "v2.1.0"
     },
+    "symfony/password-hasher": {
+        "version": "v5.3.4"
+    },
     "symfony/phpunit-bridge": {
         "version": "5.1",
         "recipe": {
@@ -483,9 +486,6 @@
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.22.0"
-    },
-    "symfony/polyfill-intl-icu": {
-        "version": "v1.22.1"
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.22.1"
