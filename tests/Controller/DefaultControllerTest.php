@@ -23,6 +23,6 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/calendar');
-        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode(), 'REQUEST IS : ' . $client->getRequest());
+        $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode(), $client->getRequest());
     }
 }
