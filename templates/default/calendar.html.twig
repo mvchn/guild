@@ -1,12 +1,36 @@
-{% extends 'base.html.twig' %}
+{% extends 'calendar.html.twig' %}
 
-{% block main %}
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Calendar</h1>
-        <p class="lead">Quickly build an effective calendar for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
-    </div>
+{% block body %}
+    <div class="bd-cheatsheet container-fluid bg-body">
+        <section id="content">
+{#            <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Contents</h2>#}
 
-    <div class="container">
+            <article class="my-3" id="typography">
+                <div class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+{#                    <h3>Typography</h3>#}
+{#                    <a class="d-flex align-items-center" href="#">Documentation</a>#}
+                </div>
 
+                <div>
+                    <p class="display-3">Calendar range, owner, other title</p>
+                    <p class="h1">Month, maybe year</p>
+
+                    <p class="lead">
+                        Here must be placed instruction to choose date and time.
+                    </p>
+                    <p>
+                        <a href="" class="btn btn-outline btn-outline-primary">12:00 &mdash; 13:00</a>
+                    </p>
+
+                    <div class="bd-example">
+                        <blockquote class="blockquote">
+                            <p>Calendar must be configurable for user roles of and (or) with controllers.</p>
+                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                        </blockquote>
+                    </div>
+
+                </div>
+            </article>
+        </section>
     </div>
 {% endblock %}

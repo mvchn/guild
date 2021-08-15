@@ -28,13 +28,5 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/calendar", name="calendar")
-     */
-    public function calendar() : Response
-    {
-        return $this->render('default/calendar.html.twig', [
-            'controller_name' => 'DefaultController',
-        ]);
-    }
+
 }
