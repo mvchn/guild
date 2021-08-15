@@ -3,7 +3,13 @@
 <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="bin/.phpunit/phpunit.xsd"
+         backupGlobals="false"
          colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
          bootstrap="tests/bootstrap.php"
 >
     <php>

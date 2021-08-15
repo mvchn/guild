@@ -9,6 +9,8 @@
 //import './styles/app.css';
 
 import './styles/global.scss';
+//TODO: separate from global
+import './styles/cheatsheet.css';
 
 // start the Stimulus application
 //import './bootstrap';

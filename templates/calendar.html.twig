@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}Guild application{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.svg') }}" />
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.svg') }}" />
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+{#    TODO: separate encore point mus be here <link href="cheatsheet.css" rel="stylesheet">#}
+</head>
+<body class="bg-light">
+
+{% block body %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+
+{# it's not mandatory to set the timezone in localizeddate(). This is done to
+           avoid errors when the 'intl' PHP extension is not available and the application
+           is forced to use the limited "intl polyfill", which only supports UTC and GMT #}
+<!-- Page rendered on {{ 'now'|format_datetime('long', 'long', '', 'UTC') }} -->
+</body>
+</html>
