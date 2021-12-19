@@ -1,0 +1,13 @@
+{% extends 'calendar/index.html.twig' %}
+
+{% block content %}
+
+        <p class="display-4">Calendar range, owner, other title</p>
+        <p class="h1">Month, maybe year</p>
+
+        <p class="lead">
+            Here must be placed instruction to choose date and time.
+        </p>
+        {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+        {{ form(form) }}
+{% endblock %}
